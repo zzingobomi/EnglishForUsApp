@@ -28,9 +28,13 @@ import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
+import com.zzingobomi.englishforus.auth.FirebaseTokenManager;
 import com.zzingobomi.englishforus.auth.LoginFragment;
 import com.zzingobomi.englishforus.myitemmanage.AddItemFragment;
 import com.zzingobomi.englishforus.myitemmanage.MyItemManageFragment;
@@ -104,6 +108,25 @@ public class MainActivity extends AppCompatActivity
             mPhotoUri = mFirebaseUser.getPhotoUrl();
 
             setUserInfoNavHeader(mUsername, mPhotoUri);
+
+            // 토큰 받아오기
+            mFirebaseUser.getIdToken(true).addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
+                @Override
+                public void onComplete(@NonNull Task<GetTokenResult> task) {
+                    if(task.isSuccessful()) {
+                        GetTokenResult idToken = task.getResult();
+                        FirebaseTokenManager.getInstance().setToken(idToken.getToken());
+                        FirebaseTokenManager.getInstance().setExpirationTime(idToken.getExpirationTimestamp());
+
+                        Log.d("TAG", "getIdToken success " + idToken.getToken() + " / " + idToken.getExpirationTimestamp());
+                    } else {
+                        FirebaseTokenManager.getInstance().setToken(null);
+                        FirebaseTokenManager.getInstance().setExpirationTime(0);
+
+                        Log.d("TAG", "TgetIdToken fail " + task.getException());
+                    }
+                }
+            });
         } else {
             setUserInfoNavHeader(getString(R.string.anonymous_name), null);
         }

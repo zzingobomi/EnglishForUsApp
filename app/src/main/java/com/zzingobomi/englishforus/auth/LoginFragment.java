@@ -28,6 +28,7 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.zzingobomi.englishforus.MainActivity;
 import com.zzingobomi.englishforus.R;
@@ -121,9 +122,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Goo
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
-                if(!task.isSuccessful()) {
-                    Log.w(TAG, "signInWithCredential", task.getException());
-                    Toast.makeText(getActivity(), "Authentication failed.", Toast.LENGTH_SHORT).show();
+                if(task.isSuccessful()) {
+                    Log.d(TAG, "signInWithCredential");
 
                     FirebaseUser user = mFirebaseAuth.getCurrentUser();
 
@@ -133,9 +133,32 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Goo
 
                     // Nav 메뉴에 유저 이름 넣기
                     ((MainActivity)getActivity()).setUserInfoNavHeader(name, photoUri);
+
+                    // 토큰 받아오기
+                    user.getIdToken(true).addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<GetTokenResult> task) {
+                            if(task.isSuccessful()) {
+                                GetTokenResult idToken = task.getResult();
+                                FirebaseTokenManager.getInstance().setToken(idToken.getToken());
+                                FirebaseTokenManager.getInstance().setExpirationTime(idToken.getExpirationTimestamp());
+
+                                Log.d("TAG", "getIdToken success " + idToken.getToken() + " / " + idToken.getExpirationTimestamp());
+                            } else {
+                                FirebaseTokenManager.getInstance().setToken(null);
+                                FirebaseTokenManager.getInstance().setExpirationTime(0);
+
+                                Log.d("TAG", "TgetIdToken fail " + task.getException());
+                            }
+                        }
+                    });
+
+                    startActivity(new Intent(getActivity(), MainActivity.class));
+
                 } else {
                     startActivity(new Intent(getActivity(), MainActivity.class));
-                    //finish();
+                    Toast.makeText(getActivity(), "Authentication failed.", Toast.LENGTH_SHORT).show();
+                    Log.w(TAG, "signInWithCredential", task.getException());
                 }
             }
         });
