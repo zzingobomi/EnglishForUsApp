@@ -119,6 +119,10 @@ public class EmailLoginFragment extends Fragment implements View.OnClickListener
                         // 로그인 성공
                         Toast.makeText(getActivity(), "로그인 되었습니다.", Toast.LENGTH_SHORT).show();
 
+                        // 토큰 갱신하기
+                        Log.d("TOKEN", "Email Refresh Token");
+                        FirebaseTokenManager.getInstance().refreshToken(getContext(), user);
+
                         // Nav 메뉴에 유저 이름 넣기
                         ((MainActivity)getActivity()).setUserInfoNavHeader(name, photoUri);
 

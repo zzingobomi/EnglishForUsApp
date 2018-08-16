@@ -134,24 +134,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Goo
                     // Nav 메뉴에 유저 이름 넣기
                     ((MainActivity)getActivity()).setUserInfoNavHeader(name, photoUri);
 
-                    // 토큰 받아오기
-                    user.getIdToken(true).addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<GetTokenResult> task) {
-                            if(task.isSuccessful()) {
-                                GetTokenResult idToken = task.getResult();
-                                FirebaseTokenManager.getInstance().setToken(idToken.getToken());
-                                FirebaseTokenManager.getInstance().setExpirationTime(idToken.getExpirationTimestamp());
-
-                                Log.d("TAG", "getIdToken success " + idToken.getToken() + " / " + idToken.getExpirationTimestamp());
-                            } else {
-                                FirebaseTokenManager.getInstance().setToken(null);
-                                FirebaseTokenManager.getInstance().setExpirationTime(0);
-
-                                Log.d("TAG", "TgetIdToken fail " + task.getException());
-                            }
-                        }
-                    });
+                    // 토큰 갱신하기
+                    Log.d("TOKEN", "Google Refresh Token");
+                    FirebaseTokenManager.getInstance().refreshToken(getContext(), user);
 
                     startActivity(new Intent(getActivity(), MainActivity.class));
 

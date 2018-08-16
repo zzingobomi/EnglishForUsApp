@@ -41,6 +41,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
+import com.zzingobomi.englishforus.auth.FirebaseTokenManager;
 import com.zzingobomi.englishforus.vo.Item;
 import com.zzingobomi.englishforus.MainActivity;
 import com.zzingobomi.englishforus.R;
@@ -49,6 +50,7 @@ import com.zzingobomi.englishforus.vo.ReplyItem;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Type;
+import java.net.HttpURLConnection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -509,6 +511,7 @@ public class StudyFragment extends Fragment {
 
             try {
                 JsonObject json = new JsonObject();
+                json.addProperty("idtoken", FirebaseTokenManager.getInstance().getToken());
                 json.addProperty("regidemail", strRegIdEmail);
                 RequestBody body = RequestBody.create(JSON, json.toString());
 
@@ -520,6 +523,11 @@ public class StudyFragment extends Fragment {
                             .build();
                     Response response = client.newCall(request).execute();
 
+                    if(response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                        Log.d("HttpItemLike", "UNAUTHORIZED");
+                        return null;
+                    }
+
                     Gson gson = new Gson();
                     Type listType = new TypeToken<Item>() {}.getType();
                     item = gson.fromJson(response.body().string(), listType);
@@ -530,6 +538,11 @@ public class StudyFragment extends Fragment {
                             .delete(body)
                             .build();
                     Response response = client.newCall(request).execute();
+
+                    if(response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                        Log.d("HttpItemLike", "UNAUTHORIZED");
+                        return null;
+                    }
 
                     Gson gson = new Gson();
                     Type listType = new TypeToken<Item>() {}.getType();
@@ -601,6 +614,7 @@ public class StudyFragment extends Fragment {
 
             try {
                 JsonObject json = new JsonObject();
+                json.addProperty("idtoken", FirebaseTokenManager.getInstance().getToken());
                 json.addProperty("regidemail", strRegIdEmail);
                 RequestBody body = RequestBody.create(JSON, json.toString());
 
@@ -613,6 +627,11 @@ public class StudyFragment extends Fragment {
                             .build();
                     Response response = client.newCall(request).execute();
 
+                    if(response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                        Log.d("HttpItemLike", "UNAUTHORIZED");
+                        return null;
+                    }
+
                     Gson gson = new Gson();
                     Type listType = new TypeToken<Item>() {}.getType();
                     item = gson.fromJson(response.body().string(), listType);
@@ -624,6 +643,11 @@ public class StudyFragment extends Fragment {
                             .delete(body)
                             .build();
                     Response response = client.newCall(request).execute();
+
+                    if(response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                        Log.d("HttpItemLike", "UNAUTHORIZED");
+                        return null;
+                    }
 
                     Gson gson = new Gson();
                     Type listType = new TypeToken<Item>() {}.getType();
@@ -957,6 +981,7 @@ public class StudyFragment extends Fragment {
 
             try {
                 JsonObject json = new JsonObject();
+                json.addProperty("idtoken", FirebaseTokenManager.getInstance().getToken());
                 json.addProperty("regidemail", strRegIdEmail);
                 RequestBody body = RequestBody.create(JSON, json.toString());
 
@@ -967,6 +992,11 @@ public class StudyFragment extends Fragment {
                             .post(body)
                             .build();
                     Response response = client.newCall(request).execute();
+
+                    if(response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                        Log.d("HttpItemLike", "UNAUTHORIZED");
+                        return null;
+                    }
 
                     // TimeStamp(DB 시간) to Date(Java 시간) 를 위해
                     GsonBuilder builder = new GsonBuilder();
@@ -985,6 +1015,11 @@ public class StudyFragment extends Fragment {
                             .delete(body)
                             .build();
                     Response response = client.newCall(request).execute();
+
+                    if(response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                        Log.d("HttpItemLike", "UNAUTHORIZED");
+                        return null;
+                    }
 
                     // TimeStamp(DB 시간) to Date(Java 시간) 를 위해
                     GsonBuilder builder = new GsonBuilder();
@@ -1075,6 +1110,7 @@ public class StudyFragment extends Fragment {
 
             try {
                 JsonObject json = new JsonObject();
+                json.addProperty("idtoken", FirebaseTokenManager.getInstance().getToken());
                 json.addProperty("regidemail", strRegIdEmail);
                 RequestBody body = RequestBody.create(JSON, json.toString());
 
@@ -1085,6 +1121,11 @@ public class StudyFragment extends Fragment {
                             .post(body)
                             .build();
                     Response response = client.newCall(request).execute();
+
+                    if(response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                        Log.d("HttpItemLike", "UNAUTHORIZED");
+                        return null;
+                    }
 
                     // TimeStamp(DB 시간) to Date(Java 시간) 를 위해
                     GsonBuilder builder = new GsonBuilder();
@@ -1103,6 +1144,11 @@ public class StudyFragment extends Fragment {
                             .delete(body)
                             .build();
                     Response response = client.newCall(request).execute();
+
+                    if(response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                        Log.d("HttpItemLike", "UNAUTHORIZED");
+                        return null;
+                    }
 
                     // TimeStamp(DB 시간) to Date(Java 시간) 를 위해
                     GsonBuilder builder = new GsonBuilder();

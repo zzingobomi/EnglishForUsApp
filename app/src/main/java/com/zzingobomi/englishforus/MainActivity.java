@@ -109,24 +109,9 @@ public class MainActivity extends AppCompatActivity
 
             setUserInfoNavHeader(mUsername, mPhotoUri);
 
-            // 토큰 받아오기
-            mFirebaseUser.getIdToken(true).addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
-                @Override
-                public void onComplete(@NonNull Task<GetTokenResult> task) {
-                    if(task.isSuccessful()) {
-                        GetTokenResult idToken = task.getResult();
-                        FirebaseTokenManager.getInstance().setToken(idToken.getToken());
-                        FirebaseTokenManager.getInstance().setExpirationTime(idToken.getExpirationTimestamp());
-
-                        Log.d("TAG", "getIdToken success " + idToken.getToken() + " / " + idToken.getExpirationTimestamp());
-                    } else {
-                        FirebaseTokenManager.getInstance().setToken(null);
-                        FirebaseTokenManager.getInstance().setExpirationTime(0);
-
-                        Log.d("TAG", "TgetIdToken fail " + task.getException());
-                    }
-                }
-            });
+            // 토큰 갱신하기
+            Log.d("TOKEN", "MainActivity Refresh Token");
+            FirebaseTokenManager.getInstance().refreshToken(getApplicationContext(), mFirebaseUser);
         } else {
             setUserInfoNavHeader(getString(R.string.anonymous_name), null);
         }
@@ -294,6 +279,21 @@ public class MainActivity extends AppCompatActivity
         super.onPause();
         mGoogleApiClient.stopAutoManage(this);
         mGoogleApiClient.disconnect();
+        FirebaseTokenManager.getInstance().stopTokenRefresh();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Firebase 인증
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseUser = mFirebaseAuth.getCurrentUser();
+        if(mFirebaseUser != null) {
+            // 토큰 갱신하기
+            FirebaseTokenManager.getInstance().refreshToken(getApplicationContext(), mFirebaseUser);
+        } else {
+            Log.d("TAG", "onResume Firebase User null");
+        }
     }
 
     @Override
