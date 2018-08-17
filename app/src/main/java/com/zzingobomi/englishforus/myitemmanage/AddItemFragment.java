@@ -15,14 +15,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
+import com.zzingobomi.englishforus.auth.EmailCreateAccountFragment;
 import com.zzingobomi.englishforus.vo.Item;
 import com.zzingobomi.englishforus.MainActivity;
 import com.zzingobomi.englishforus.R;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -82,35 +85,76 @@ public class AddItemFragment extends Fragment {
             mAddButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (!validateForm()) {
-                        return;
-                    }
-
-                    mCreateItemLayout.setVisibility(View.GONE);
-                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-
-                    String titleKo = mAddTitle_KO.getText().toString();
-                    String titleEn = mAddTitle_EN.getText().toString();
-                    String addInfo = mAddAddInfo.getText().toString();
-                    String regIdEmail = mUser.getEmail();
-                    String regDisplayName = mUser.getDisplayName();
-
-                    // API 보내기
-                    new HttpAsyncTask().execute("http://englishforus.zzingobomi.synology.me/itemapi/oneadditem"
-                            ,titleKo
-                            ,titleEn
-                            ,addInfo
-                            ,regIdEmail
-                            ,regDisplayName
-                            );
+                    onClickAddItemBtn(v);
                 }
             });
             return view;
     }
 
-    private static class HttpAsyncTask extends AsyncTask<String, Void, String> {
+    private void onClickAddItemBtn(View v) {
+        if (!validateForm()) {
+            return;
+        }
+
+        mCreateItemLayout.setVisibility(View.GONE);
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+
+        String titleKo = mAddTitle_KO.getText().toString();
+        String titleEn = mAddTitle_EN.getText().toString();
+        String addInfo = mAddAddInfo.getText().toString();
+        String regIdEmail = mUser.getEmail();
+        String regDisplayName = mUser.getDisplayName();
+
+        // API 보내기
+        new HttpAddItemAsyncTask(this).execute("http://englishforus.zzingobomi.synology.me/itemapi/oneadditem"
+                ,titleKo
+                ,titleEn
+                ,addInfo
+                ,regIdEmail
+                ,regDisplayName
+        );
+    }
+
+    private boolean validateForm() {
+        boolean valid = true;
+
+        String titleKo = mAddTitle_KO.getText().toString();
+        if (TextUtils.isEmpty(titleKo)) {
+            mAddTitle_KO.setError("Required.");
+            valid = false;
+        } else {
+            mAddTitle_KO.setError(null);
+        }
+
+        String titleEn = mAddTitle_EN.getText().toString();
+        if (TextUtils.isEmpty(titleEn)) {
+            mAddTitle_EN.setError("Required.");
+            valid = false;
+        } else {
+            mAddTitle_EN.setError(null);
+        }
+
+        return valid;
+    }
+
+    //region 네트워크 영역
+
+    private static class HttpAddItemAsyncTask extends AsyncTask<String, Void, String> {
+
+        private WeakReference<AddItemFragment> fragmentWeakReference;
         OkHttpClient client = new OkHttpClient();
+        MaterialDialog waitDialog;
+
+        HttpAddItemAsyncTask(AddItemFragment fragment) {
+            fragmentWeakReference = new WeakReference<>(fragment);
+            waitDialog = new MaterialDialog.Builder(fragment.getActivity())
+                    .title(R.string.wait_progress_title)
+                    .content(R.string.wait_progress_content)
+                    .progress(true, 0)
+                    .cancelable(false)
+                    .show();
+        }
 
         @Override
         protected String doInBackground(String... params) {
@@ -148,32 +192,23 @@ public class AddItemFragment extends Fragment {
         @Override
         protected void onPostExecute(String response) {
             super.onPostExecute(response);
+            waitDialog.dismiss();
             if(response.equals("SUCCESS")) {
                 Log.d(TAG, "Response:SUCCESS");
-                mCreateResultLayout.setVisibility(View.VISIBLE);
+
+                final AddItemFragment fragment = fragmentWeakReference.get();
+                if(fragment == null || fragment.isDetached()) return;
+
+                // 내 문장 관리 화면으로 돌아가기
+                MyItemManageFragment myItemManageFragment = new MyItemManageFragment();
+                fragment.getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.contnet_fragment_layout, myItemManageFragment)
+                        .commit();
+
+                //mCreateResultLayout.setVisibility(View.VISIBLE);
             }
         }
     }
 
-    private boolean validateForm() {
-        boolean valid = true;
-
-        String titleKo = mAddTitle_KO.getText().toString();
-        if (TextUtils.isEmpty(titleKo)) {
-            mAddTitle_KO.setError("Required.");
-            valid = false;
-        } else {
-            mAddTitle_KO.setError(null);
-        }
-
-        String titleEn = mAddTitle_EN.getText().toString();
-        if (TextUtils.isEmpty(titleEn)) {
-            mAddTitle_EN.setError("Required.");
-            valid = false;
-        } else {
-            mAddTitle_EN.setError(null);
-        }
-
-        return valid;
-    }
+    //endregion
 }

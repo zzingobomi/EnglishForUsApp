@@ -1,14 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1"
     tools:context=".myitemmanage.MyItemManageFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/myitems_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="MyItemManage" />
+        android:layout_height="0dp"
+        android:layout_weight="0.9"
+        tools:listitem="@layout/myitem_card" />
 
-</FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"
+        android:orientation="vertical">
+        <View
+            android:background="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="2px"/>
+        <Button
+            android:id="@+id/addmyitem_btn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:drawableLeft="@drawable/ic_study_comment"
+            android:layout_gravity="center"
+            android:text="문장 추가하기"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>
