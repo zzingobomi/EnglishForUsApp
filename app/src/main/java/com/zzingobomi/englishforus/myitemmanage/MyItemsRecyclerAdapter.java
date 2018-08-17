@@ -87,6 +87,11 @@ public class MyItemsRecyclerAdapter extends RecyclerView.Adapter<MyItemsRecycler
         }
     }
 
+    @Override
+    public long getItemId(int position) {
+        return mDataList.get(position).getIdx();
+    }
+
     public void setOnClickListener(MyItemsRecyclerViewClickListener listener) {
         mListener = listener;
     }
@@ -100,5 +105,17 @@ public class MyItemsRecyclerAdapter extends RecyclerView.Adapter<MyItemsRecycler
 
         // Delete 버튼 클릭
         void onDeleteButtonClicked(int position);
+    }
+
+    public void removeItem(int position) {
+        mDataList.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, mDataList.size());
+    }
+
+    public void addItem(int position, Item item) {
+        mDataList.add(position, item);
+        notifyItemInserted(position);
+        notifyItemRangeChanged(position, mDataList.size());
     }
 }

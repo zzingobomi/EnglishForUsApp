@@ -1,8 +1,10 @@
 package com.zzingobomi.englishforus.myitemmanage;
 
 
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -14,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,6 +31,7 @@ import com.google.gson.reflect.TypeToken;
 import com.zzingobomi.englishforus.MainActivity;
 import com.zzingobomi.englishforus.R;
 import com.zzingobomi.englishforus.auth.EmailCreateAccountFragment;
+import com.zzingobomi.englishforus.auth.FirebaseTokenManager;
 import com.zzingobomi.englishforus.study.StudyFragment;
 import com.zzingobomi.englishforus.vo.Item;
 import com.zzingobomi.englishforus.vo.ReplyItem;
@@ -59,9 +63,11 @@ public class MyItemManageFragment extends Fragment implements MyItemsRecyclerAda
 
     private Button mAddItemButton;
 
-    private List<Item> mCurItems;
+    //private List<Item> mCurItems;
     private RecyclerView mRecyclerView;
     private MyItemsRecyclerAdapter mAdapter;
+
+    private int mCurSelectPosition = -1;
 
 
     public MyItemManageFragment() {
@@ -128,7 +134,25 @@ public class MyItemManageFragment extends Fragment implements MyItemsRecyclerAda
 
     @Override
     public void onDeleteButtonClicked(int position) {
-        Log.d(TAG, "onDeleteButtonClicked: " + position);
+        final MyItemManageFragment fragment = this;
+        final int pos = position;
+        mCurSelectPosition = position;
+        new MaterialDialog.Builder(getContext())
+                .title("문장 삭제")
+                .content("문장을 정말로 삭제하시겠습니까?")
+                .positiveText(R.string.agree)
+                .negativeText(R.string.disagree)
+                .positiveColor(Color.BLACK)
+                .negativeColor(Color.BLACK)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        Log.d(TAG, "Position : " + pos + " / " + "Idx : " + mAdapter.getItemId(pos));
+                        String reqUrl = "http://englishforus.zzingobomi.synology.me/itemapi/myitem/" + mAdapter.getItemId(pos);
+                        new HttpMyItemDeleteAsyncTask(fragment).execute(reqUrl);
+                    }
+                })
+                .show();
     }
 
     //region 네트워크 영역
@@ -206,12 +230,90 @@ public class MyItemManageFragment extends Fragment implements MyItemsRecyclerAda
                 final MyItemManageFragment fragment = fragmentWeakReference.get();
                 if(fragment == null || fragment.isDetached()) return;
 
-                fragment.mCurItems = items;
+                //fragment.mCurItems = items;
 
                 // 어댑터 설정
                 fragment.mAdapter = new MyItemsRecyclerAdapter(items);
                 fragment.mAdapter.setOnClickListener(fragment);
                 fragment.mRecyclerView.setAdapter(fragment.mAdapter);
+            }
+        }
+    }
+
+
+
+    ///
+    /// 내 문장 삭제하기
+    ///
+    private static class HttpMyItemDeleteAsyncTask extends AsyncTask<String, Void, String> {
+        private WeakReference<MyItemManageFragment> fragmentWeakReference;
+        OkHttpClient client = new OkHttpClient();
+        MaterialDialog waitDialog;
+
+        HttpMyItemDeleteAsyncTask(MyItemManageFragment fragment) {
+            fragmentWeakReference = new WeakReference<>(fragment);
+            waitDialog = new MaterialDialog.Builder(fragment.getActivity())
+                    .title(R.string.wait_progress_title)
+                    .content(R.string.wait_progress_content)
+                    .progress(true, 0)
+                    .cancelable(false)
+                    .show();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            // for debug worker thread
+            if(android.os.Debug.isDebuggerConnected())
+                android.os.Debug.waitForDebugger();
+
+            final MyItemManageFragment fragment = fragmentWeakReference.get();
+            if(fragment == null || fragment.isDetached()) return "E_FAIL";
+
+            String result = null;
+            String strUrl = params[0];
+
+            try {
+                Request request = new Request.Builder()
+                        .url(strUrl)
+                        .delete()
+                        .build();
+
+                /* 이게 진짜 코드
+                JsonObject json = new JsonObject();
+                json.addProperty("idtoken", FirebaseTokenManager.getInstance().getToken());
+                RequestBody body = RequestBody.create(JSON, json.toString());
+
+                Request request = new Request.Builder()
+                        .url(strUrl)
+                        .delete(body)
+                        .build();
+                        */
+
+                Response response = client.newCall(request).execute();
+                result = response.body().string();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            waitDialog.dismiss();
+            if(result != null) {
+                Log.d("MyItemDelete : ", result);
+
+                if(result.equals("SUCCESS")) {
+                    MyItemManageFragment fragment = fragmentWeakReference.get();
+                    if(fragment == null || fragment.isDetached()) return;
+
+                    if(fragment.mCurSelectPosition != -1) {
+                        fragment.mAdapter.removeItem(fragment.mCurSelectPosition);
+                        fragment.mCurSelectPosition = -1;
+                    }
+                }
             }
         }
     }

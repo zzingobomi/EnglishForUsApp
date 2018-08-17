@@ -200,12 +200,11 @@ public class AddItemFragment extends Fragment {
                 if(fragment == null || fragment.isDetached()) return;
 
                 // 내 문장 관리 화면으로 돌아가기
+                // 다시 문장들 요청하는건 너무 비효율 적이고.. 추가된 문장만 받아서 클라에서 제일 위에 추가해 주는게 좋을듯..?
                 MyItemManageFragment myItemManageFragment = new MyItemManageFragment();
                 fragment.getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.contnet_fragment_layout, myItemManageFragment)
                         .commit();
-
-                //mCreateResultLayout.setVisibility(View.VISIBLE);
             }
         }
     }
