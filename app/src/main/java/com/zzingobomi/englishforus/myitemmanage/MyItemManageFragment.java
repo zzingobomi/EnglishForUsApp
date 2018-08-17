@@ -78,6 +78,8 @@ public class MyItemManageFragment extends Fragment implements MyItemsRecyclerAda
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.d(TAG, "MyItemManageFragment onCreateView");
+
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
         if(mUser == null) {
@@ -116,6 +118,8 @@ public class MyItemManageFragment extends Fragment implements MyItemsRecyclerAda
         // ItemDecoration
         DividerItemDecoration decoration = new DividerItemDecoration(this.getContext(), layoutManager.getOrientation());
         mRecyclerView.addItemDecoration(decoration);
+
+        // 만약 번들로 받은 정보가 있다면.. 내 문장 안 받아오고 바로 추가..? 다시 받아올 필요가 없을지도..
 
         new HttpMyItemsAsyncTask(this).execute("http://englishforus.zzingobomi.synology.me/itemapi/myitems");
 

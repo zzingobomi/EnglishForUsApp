@@ -199,6 +199,8 @@ public class AddItemFragment extends Fragment {
                 final AddItemFragment fragment = fragmentWeakReference.get();
                 if(fragment == null || fragment.isDetached()) return;
 
+                // 서버에서 추가된 ItemVO 를 주고..
+
                 // 내 문장 관리 화면으로 돌아가기
                 // 다시 문장들 요청하는건 너무 비효율 적이고.. 추가된 문장만 받아서 클라에서 제일 위에 추가해 주는게 좋을듯..?
                 MyItemManageFragment myItemManageFragment = new MyItemManageFragment();
