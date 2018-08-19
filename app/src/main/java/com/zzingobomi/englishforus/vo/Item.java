@@ -1,10 +1,14 @@
 package com.zzingobomi.englishforus.vo;
 
-public class Item {
+import java.io.Serializable;
+import java.util.Date;
+
+public class Item implements Serializable{
     private int idx;
     private String title_ko;
     private String title_en;
     private String addinfo;
+    private Date regdate;
     private String regidemail;
     private String regdisplayname;
     private int replycnt;
@@ -76,6 +80,14 @@ public class Item {
         return regidemail;
     }
 
+    public Date getRegdate() {
+        return regdate;
+    }
+
+    public void setRegdate(Date regdate) {
+        this.regdate = regdate;
+    }
+
     public void setRegidemail(String regidemail) {
         this.regidemail = regidemail;
     }
@@ -143,6 +155,7 @@ public class Item {
                 ", title_ko='" + title_ko + '\'' +
                 ", title_en='" + title_en + '\'' +
                 ", addinfo='" + addinfo + '\'' +
+                ", regdate=" + regdate +
                 ", regidemail='" + regidemail + '\'' +
                 ", regdisplayname='" + regdisplayname + '\'' +
                 ", replycnt=" + replycnt +

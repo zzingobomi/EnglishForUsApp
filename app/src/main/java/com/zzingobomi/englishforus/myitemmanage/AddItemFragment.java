@@ -1,10 +1,12 @@
 package com.zzingobomi.englishforus.myitemmanage;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,13 +21,23 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.reflect.TypeToken;
 import com.zzingobomi.englishforus.auth.EmailCreateAccountFragment;
+import com.zzingobomi.englishforus.auth.FirebaseTokenManager;
 import com.zzingobomi.englishforus.vo.Item;
 import com.zzingobomi.englishforus.MainActivity;
 import com.zzingobomi.englishforus.R;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.lang.reflect.Type;
+import java.util.Date;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -38,8 +50,13 @@ import okhttp3.Response;
  * A simple {@link Fragment} subclass.
  */
 public class AddItemFragment extends Fragment {
+    private OnAddItemPostExecuteListener mListener;
+    public interface OnAddItemPostExecuteListener {
+        void OnAddItemPostExecute(Item item);
+    }
 
     private static final String TAG = MainActivity.class.getSimpleName();
+    public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     // Firebase 인증
     FirebaseAuth mAuth;
@@ -58,6 +75,15 @@ public class AddItemFragment extends Fragment {
         // Required empty public constructor
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try{
+            mListener = (OnAddItemPostExecuteListener)context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(((Activity)context).getLocalClassName() + " 는 OnAddItemPostExecuteListener를 구현해야 합니다.");
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -140,7 +166,7 @@ public class AddItemFragment extends Fragment {
 
     //region 네트워크 영역
 
-    private static class HttpAddItemAsyncTask extends AsyncTask<String, Void, String> {
+    private static class HttpAddItemAsyncTask extends AsyncTask<String, Void, Item> {
 
         private WeakReference<AddItemFragment> fragmentWeakReference;
         OkHttpClient client = new OkHttpClient();
@@ -157,7 +183,7 @@ public class AddItemFragment extends Fragment {
         }
 
         @Override
-        protected String doInBackground(String... params) {
+        protected Item doInBackground(String... params) {
 
             // for debug worker thread
             if(android.os.Debug.isDebuggerConnected())
@@ -171,42 +197,63 @@ public class AddItemFragment extends Fragment {
             String strAddInfo = params[3];
             String strRegIdEmail = params[4];
             String strRegDisplayName = params[5];
-            Item item = new Item(strTitleKo, strTitleEn, strAddInfo, strRegIdEmail, strRegDisplayName);
+            Item resultItem = null;
+            //Item item = new Item(strTitleKo, strTitleEn, strAddInfo, strRegIdEmail, strRegDisplayName);
 
             try {
+                JsonObject json = new JsonObject();
+                json.addProperty("idtoken", FirebaseTokenManager.getInstance().getToken());
+                json.addProperty("title_ko", strTitleKo);
+                json.addProperty("title_en", strTitleEn);
+                json.addProperty("addinfo", strAddInfo);
+                json.addProperty("regidemail", strRegIdEmail);
+                json.addProperty("regdisplayname", strRegDisplayName);
+                RequestBody requestBody = RequestBody.create(JSON, json.toString());
+
+                /*
+                // 다른 좋은 방법 있기 전까지... 그냥 값 집어넣어서 보내기 ItemVO 에 맵핑하는 방법이 있을텐데..
                 Gson gson = new Gson();
                 RequestBody requestBody = RequestBody.create(
                         MediaType.parse("application/json; charset=utf-8")
                         ,gson.toJson(item));
+                        */
 
-                Request request = new Request.Builder().url(strUrl).post(requestBody).build();
+                Request request = new Request.Builder()
+                        .url(strUrl)
+                        .post(requestBody)
+                        .build();
                 Response response = client.newCall(request).execute();
-                strResponse = response.body().string();
+
+                // TimeStamp(DB 시간) to Date(Java 시간) 를 위해
+                GsonBuilder builder = new GsonBuilder();
+                builder.registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {
+                    public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+                        return new Date(json.getAsJsonPrimitive().getAsLong());
+                    }
+                });
+                Gson gson = builder.create();
+                Type listType = new TypeToken<Item>() {}.getType();
+                resultItem = gson.fromJson(response.body().string(), listType);
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return strResponse;
+            return resultItem;
         }
 
         @Override
-        protected void onPostExecute(String response) {
-            super.onPostExecute(response);
+        protected void onPostExecute(Item resultItem) {
+            super.onPostExecute(resultItem);
             waitDialog.dismiss();
-            if(response.equals("SUCCESS")) {
+            if(resultItem != null) {
                 Log.d(TAG, "Response:SUCCESS");
 
                 final AddItemFragment fragment = fragmentWeakReference.get();
                 if(fragment == null || fragment.isDetached()) return;
 
-                // 서버에서 추가된 ItemVO 를 주고..
-
-                // 내 문장 관리 화면으로 돌아가기
-                // 다시 문장들 요청하는건 너무 비효율 적이고.. 추가된 문장만 받아서 클라에서 제일 위에 추가해 주는게 좋을듯..?
-                MyItemManageFragment myItemManageFragment = new MyItemManageFragment();
-                fragment.getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.contnet_fragment_layout, myItemManageFragment)
-                        .commit();
+                fragment.mListener.OnAddItemPostExecute(resultItem);
+                fragment.getActivity().getSupportFragmentManager()
+                        .popBackStack();
             }
         }
     }

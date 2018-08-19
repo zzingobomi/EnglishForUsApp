@@ -39,9 +39,10 @@ import com.zzingobomi.englishforus.auth.LoginFragment;
 import com.zzingobomi.englishforus.myitemmanage.AddItemFragment;
 import com.zzingobomi.englishforus.myitemmanage.MyItemManageFragment;
 import com.zzingobomi.englishforus.study.StudyFragment;
+import com.zzingobomi.englishforus.vo.Item;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener, StudyFragment.OnStudyCountPlusListener {
+        implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener, StudyFragment.OnStudyCountPlusListener, AddItemFragment.OnAddItemPostExecuteListener {
     // FirebaseAnalytics 관련
     public FirebaseAnalytics mFirebaseAnalytics;
 
@@ -306,5 +307,15 @@ public class MainActivity extends AppCompatActivity
         outState.putString("Rotation", "true");
 
         super.onSaveInstanceState(outState);
+    }
+
+    ///
+    /// NewItem 추가 되었을때 호출되는 Listener
+    ///
+    @Override
+    public void OnAddItemPostExecute(Item item) {
+        if(mCurrentFragment instanceof MyItemManageFragment) {
+            ((MyItemManageFragment) mCurrentFragment).addNewItem(item);
+        }
     }
 }

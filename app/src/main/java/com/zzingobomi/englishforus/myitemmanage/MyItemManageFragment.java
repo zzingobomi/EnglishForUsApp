@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -79,6 +80,7 @@ public class MyItemManageFragment extends Fragment implements MyItemsRecyclerAda
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Log.d(TAG, "MyItemManageFragment onCreateView");
+        final MyItemManageFragment fragment = this;
 
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
@@ -94,12 +96,15 @@ public class MyItemManageFragment extends Fragment implements MyItemsRecyclerAda
             @Override
             public void onClick(View v) {
 
-                // 내 문장 추가 화면으로 전환
                 AddItemFragment addItemFragment = new AddItemFragment();
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.contnet_fragment_layout, addItemFragment)
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction
+                        .setCustomAnimations(R.anim.fragment_fade_in, R.anim.fragment_fade_out, R.anim.fragment_fade_in, R.anim.fragment_fade_out)
+                        .add(R.id.contnet_fragment_layout, addItemFragment)
                         .addToBackStack(null)
                         .commit();
+
+                fragmentTransaction.hide(fragment);
             }
         });
 
@@ -115,15 +120,19 @@ public class MyItemManageFragment extends Fragment implements MyItemsRecyclerAda
         animator.setChangeDuration(1000);
         mRecyclerView.setItemAnimator(animator);
 
-        // ItemDecoration
-        DividerItemDecoration decoration = new DividerItemDecoration(this.getContext(), layoutManager.getOrientation());
-        mRecyclerView.addItemDecoration(decoration);
-
-        // 만약 번들로 받은 정보가 있다면.. 내 문장 안 받아오고 바로 추가..? 다시 받아올 필요가 없을지도..
+        // ItemDecoration 다른 속성들 있나..?
+        //DividerItemDecoration decoration = new DividerItemDecoration(this.getContext(), layoutManager.getOrientation());
+        //mRecyclerView.addItemDecoration(decoration);
 
         new HttpMyItemsAsyncTask(this).execute("http://englishforus.zzingobomi.synology.me/itemapi/myitems");
 
         return view;
+    }
+
+    public void addNewItem(Item item) {
+        Log.d(TAG, "New Item : " + item.getIdx() + " / " + item.getTitle_ko());
+        mAdapter.addItem(0, item);
+        mRecyclerView.scrollToPosition(0);
     }
 
     @Override
@@ -205,7 +214,6 @@ public class MyItemManageFragment extends Fragment implements MyItemsRecyclerAda
                         .build();
                 Response response = client.newCall(request).execute();
 
-                // 현재 Item 에는 시간이 없지만 시간순으로 뿌려주기 위해 보내줘야 할듯..
                 // TimeStamp(DB 시간) to Date(Java 시간) 를 위해
                 GsonBuilder builder = new GsonBuilder();
                 builder.registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {
@@ -235,6 +243,10 @@ public class MyItemManageFragment extends Fragment implements MyItemsRecyclerAda
                 if(fragment == null || fragment.isDetached()) return;
 
                 //fragment.mCurItems = items;
+
+                //for(int i = 0; i < items.size(); i++) {
+                    //Log.d(TAG, "RegDate : " + items.get(i).getRegdate().toString());
+                //}
 
                 // 어댑터 설정
                 fragment.mAdapter = new MyItemsRecyclerAdapter(items);

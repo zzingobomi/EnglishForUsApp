@@ -410,7 +410,14 @@ public class StudyFragment extends Fragment {
                         .build();
                 Response response = client.newCall(request).execute();
 
-                Gson gson = new Gson();
+                // TimeStamp(DB 시간) to Date(Java 시간) 를 위해
+                GsonBuilder builder = new GsonBuilder();
+                builder.registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {
+                    public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+                        return new Date(json.getAsJsonPrimitive().getAsLong());
+                    }
+                });
+                Gson gson = builder.create();
                 Type listType = new TypeToken<Item>() {}.getType();
                 item = gson.fromJson(response.body().string(), listType);
 
@@ -514,40 +521,39 @@ public class StudyFragment extends Fragment {
                 json.addProperty("idtoken", FirebaseTokenManager.getInstance().getToken());
                 json.addProperty("regidemail", strRegIdEmail);
                 RequestBody body = RequestBody.create(JSON, json.toString());
+                Request request = null;
 
                 if(!bLike) {
                     // 좋아요
-                    Request request = new Request.Builder()
+                    request = new Request.Builder()
                             .url(strUrl)
                             .post(body)
                             .build();
-                    Response response = client.newCall(request).execute();
-
-                    if(response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
-                        Log.d("HttpItemLike", "UNAUTHORIZED");
-                        return null;
-                    }
-
-                    Gson gson = new Gson();
-                    Type listType = new TypeToken<Item>() {}.getType();
-                    item = gson.fromJson(response.body().string(), listType);
                 } else {
                     // 좋아요 취소
-                    Request request = new Request.Builder()
+                    request = new Request.Builder()
                             .url(strUrl)
                             .delete(body)
                             .build();
-                    Response response = client.newCall(request).execute();
-
-                    if(response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
-                        Log.d("HttpItemLike", "UNAUTHORIZED");
-                        return null;
-                    }
-
-                    Gson gson = new Gson();
-                    Type listType = new TypeToken<Item>() {}.getType();
-                    item = gson.fromJson(response.body().string(), listType);
                 }
+
+                Response response = client.newCall(request).execute();
+
+                if(response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                    Log.d("HttpItemLike", "UNAUTHORIZED");
+                    return null;
+                }
+
+                // TimeStamp(DB 시간) to Date(Java 시간) 를 위해
+                GsonBuilder builder = new GsonBuilder();
+                builder.registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {
+                    public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+                        return new Date(json.getAsJsonPrimitive().getAsLong());
+                    }
+                });
+                Gson gson = builder.create();
+                Type listType = new TypeToken<Item>() {}.getType();
+                item = gson.fromJson(response.body().string(), listType);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -617,42 +623,39 @@ public class StudyFragment extends Fragment {
                 json.addProperty("idtoken", FirebaseTokenManager.getInstance().getToken());
                 json.addProperty("regidemail", strRegIdEmail);
                 RequestBody body = RequestBody.create(JSON, json.toString());
+                Request request = null;
 
                 if(!bBad) {
-                    Log.d("HttpItemBad 2: ", bBad.toString());
                     // 신고하기
-                    Request request = new Request.Builder()
+                    request = new Request.Builder()
                             .url(strUrl)
                             .post(body)
                             .build();
-                    Response response = client.newCall(request).execute();
-
-                    if(response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
-                        Log.d("HttpItemLike", "UNAUTHORIZED");
-                        return null;
-                    }
-
-                    Gson gson = new Gson();
-                    Type listType = new TypeToken<Item>() {}.getType();
-                    item = gson.fromJson(response.body().string(), listType);
                 } else {
-                    Log.d("HttpItemBad 3: ", bBad.toString());
                     // 신고하기 취소
-                    Request request = new Request.Builder()
+                    request = new Request.Builder()
                             .url(strUrl)
                             .delete(body)
                             .build();
-                    Response response = client.newCall(request).execute();
-
-                    if(response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
-                        Log.d("HttpItemLike", "UNAUTHORIZED");
-                        return null;
-                    }
-
-                    Gson gson = new Gson();
-                    Type listType = new TypeToken<Item>() {}.getType();
-                    item = gson.fromJson(response.body().string(), listType);
                 }
+
+                Response response = client.newCall(request).execute();
+
+                if(response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                    Log.d("HttpItemLike", "UNAUTHORIZED");
+                    return null;
+                }
+
+                // TimeStamp(DB 시간) to Date(Java 시간) 를 위해
+                GsonBuilder builder = new GsonBuilder();
+                builder.registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {
+                    public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+                        return new Date(json.getAsJsonPrimitive().getAsLong());
+                    }
+                });
+                Gson gson = builder.create();
+                Type listType = new TypeToken<Item>() {}.getType();
+                item = gson.fromJson(response.body().string(), listType);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -984,54 +987,39 @@ public class StudyFragment extends Fragment {
                 json.addProperty("idtoken", FirebaseTokenManager.getInstance().getToken());
                 json.addProperty("regidemail", strRegIdEmail);
                 RequestBody body = RequestBody.create(JSON, json.toString());
+                Request request = null;
 
                 if(!bLike) {
                     // 좋아요
-                    Request request = new Request.Builder()
+                    request = new Request.Builder()
                             .url(strUrl)
                             .post(body)
                             .build();
-                    Response response = client.newCall(request).execute();
-
-                    if(response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
-                        Log.d("HttpItemLike", "UNAUTHORIZED");
-                        return null;
-                    }
-
-                    // TimeStamp(DB 시간) to Date(Java 시간) 를 위해
-                    GsonBuilder builder = new GsonBuilder();
-                    builder.registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {
-                        public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-                            return new Date(json.getAsJsonPrimitive().getAsLong());
-                        }
-                    });
-                    Gson gson = builder.create();
-                    Type listType = new TypeToken<ReplyItem>() {}.getType();
-                    replyItem = gson.fromJson(response.body().string(), listType);
                 } else {
                     // 좋아요 취소
-                    Request request = new Request.Builder()
+                    request = new Request.Builder()
                             .url(strUrl)
                             .delete(body)
                             .build();
-                    Response response = client.newCall(request).execute();
-
-                    if(response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
-                        Log.d("HttpItemLike", "UNAUTHORIZED");
-                        return null;
-                    }
-
-                    // TimeStamp(DB 시간) to Date(Java 시간) 를 위해
-                    GsonBuilder builder = new GsonBuilder();
-                    builder.registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {
-                        public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-                            return new Date(json.getAsJsonPrimitive().getAsLong());
-                        }
-                    });
-                    Gson gson = builder.create();
-                    Type listType = new TypeToken<ReplyItem>() {}.getType();
-                    replyItem = gson.fromJson(response.body().string(), listType);
                 }
+
+                Response response = client.newCall(request).execute();
+
+                if(response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                    Log.d("HttpItemLike", "UNAUTHORIZED");
+                    return null;
+                }
+
+                // TimeStamp(DB 시간) to Date(Java 시간) 를 위해
+                GsonBuilder builder = new GsonBuilder();
+                builder.registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {
+                    public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+                        return new Date(json.getAsJsonPrimitive().getAsLong());
+                    }
+                });
+                Gson gson = builder.create();
+                Type listType = new TypeToken<ReplyItem>() {}.getType();
+                replyItem = gson.fromJson(response.body().string(), listType);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -1113,54 +1101,39 @@ public class StudyFragment extends Fragment {
                 json.addProperty("idtoken", FirebaseTokenManager.getInstance().getToken());
                 json.addProperty("regidemail", strRegIdEmail);
                 RequestBody body = RequestBody.create(JSON, json.toString());
+                Request request = null;
 
                 if(!bBad) {
                     // 신고하기
-                    Request request = new Request.Builder()
+                    request = new Request.Builder()
                             .url(strUrl)
                             .post(body)
                             .build();
-                    Response response = client.newCall(request).execute();
-
-                    if(response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
-                        Log.d("HttpItemLike", "UNAUTHORIZED");
-                        return null;
-                    }
-
-                    // TimeStamp(DB 시간) to Date(Java 시간) 를 위해
-                    GsonBuilder builder = new GsonBuilder();
-                    builder.registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {
-                        public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-                            return new Date(json.getAsJsonPrimitive().getAsLong());
-                        }
-                    });
-                    Gson gson = builder.create();
-                    Type listType = new TypeToken<ReplyItem>() {}.getType();
-                    replyItem = gson.fromJson(response.body().string(), listType);
                 } else {
                     // 신고하기 취소
-                    Request request = new Request.Builder()
+                    request = new Request.Builder()
                             .url(strUrl)
                             .delete(body)
                             .build();
-                    Response response = client.newCall(request).execute();
-
-                    if(response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
-                        Log.d("HttpItemLike", "UNAUTHORIZED");
-                        return null;
-                    }
-
-                    // TimeStamp(DB 시간) to Date(Java 시간) 를 위해
-                    GsonBuilder builder = new GsonBuilder();
-                    builder.registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {
-                        public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-                            return new Date(json.getAsJsonPrimitive().getAsLong());
-                        }
-                    });
-                    Gson gson = builder.create();
-                    Type listType = new TypeToken<ReplyItem>() {}.getType();
-                    replyItem = gson.fromJson(response.body().string(), listType);
                 }
+
+                Response response = client.newCall(request).execute();
+
+                if(response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                    Log.d("HttpItemLike", "UNAUTHORIZED");
+                    return null;
+                }
+
+                // TimeStamp(DB 시간) to Date(Java 시간) 를 위해
+                GsonBuilder builder = new GsonBuilder();
+                builder.registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {
+                    public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+                        return new Date(json.getAsJsonPrimitive().getAsLong());
+                    }
+                });
+                Gson gson = builder.create();
+                Type listType = new TypeToken<ReplyItem>() {}.getType();
+                replyItem = gson.fromJson(response.body().string(), listType);
             } catch (IOException e) {
                 e.printStackTrace();
             }
