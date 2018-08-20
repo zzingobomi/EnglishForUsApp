@@ -1,10 +1,14 @@
 package com.zzingobomi.englishforus.myitemmanage;
 
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -65,9 +69,17 @@ public class MyItemsRecyclerAdapter extends RecyclerView.Adapter<MyItemsRecycler
                         holder.bReadViewState = false;
                     } else {
                         // 애니메이션 적용하기..
+                        ScaleAnimation animation = new ScaleAnimation(1, 1, 1, 2);
+                        animation.setDuration(2000);
+                        holder.list_layout.setAnimation(animation);
+                        holder.list_layout.startAnimation(animation);
+
+
+                        /*
                         holder.list_layout.setVisibility(View.GONE);
                         holder.read_layout.setVisibility(View.VISIBLE);
                         holder.bReadViewState = true;
+                        */
                     }
 
                     mListener.onItemClicked(pos);
@@ -94,6 +106,7 @@ public class MyItemsRecyclerAdapter extends RecyclerView.Adapter<MyItemsRecycler
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
+        CardView myitem_card_view;
 
         // ListView 에서 보여질 때
         TextView list_title_ko;
@@ -122,6 +135,8 @@ public class MyItemsRecyclerAdapter extends RecyclerView.Adapter<MyItemsRecycler
 
         public ViewHolder(View itemView) {
             super(itemView);
+            myitem_card_view = itemView.findViewById(R.id.myitem_card_view);
+
             list_title_ko = itemView.findViewById(R.id.myitem_card_list_title_ko);
             list_title_en = itemView.findViewById(R.id.myitem_card_list_title_en);
 
