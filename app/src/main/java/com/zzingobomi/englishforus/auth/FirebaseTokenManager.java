@@ -112,7 +112,9 @@ public class FirebaseTokenManager {
     /// 토큰 갱신 알람 멈추기
     ///
     public void stopTokenRefresh() {
-        mAlarmManager.cancel(mSender);
+        if(mAlarmManager != null) {
+            mAlarmManager.cancel(mSender);
+        }
     }
 
     /*

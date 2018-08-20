@@ -2,6 +2,7 @@ package com.zzingobomi.englishforus.auth;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -131,6 +132,10 @@ public class EmailLoginFragment extends Fragment implements View.OnClickListener
                         bundle.putString(FirebaseAnalytics.Param.SIGN_UP_METHOD, name);
                         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle);
 
+                        // TODO: 우선 메인으로.. 후에 바로 문장관리
+                        startActivity(new Intent(getActivity(), MainActivity.class));
+
+                        /*
                         // 문장 입력 화면으로 전환 (모든 백스탭이 다 날라가는듯.. 좀 더 연구..)
                         // FragmentManager.popBackStack(String name, FragmentManager.POP_BACK_STACK_INCLUSIVE)
                         FragmentManager fm = getActivity().getSupportFragmentManager();
@@ -142,6 +147,7 @@ public class EmailLoginFragment extends Fragment implements View.OnClickListener
                         getActivity().getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.contnet_fragment_layout, addItemFragment)
                                 .commit();
+                                */
 
                     } else {
                         Log.w(TAG, "signInWithEmail:failure", task.getException());

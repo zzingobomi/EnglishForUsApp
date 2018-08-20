@@ -69,17 +69,14 @@ public class MyItemsRecyclerAdapter extends RecyclerView.Adapter<MyItemsRecycler
                         holder.bReadViewState = false;
                     } else {
                         // 애니메이션 적용하기..
-                        ScaleAnimation animation = new ScaleAnimation(1, 1, 1, 2);
-                        animation.setDuration(2000);
-                        holder.list_layout.setAnimation(animation);
-                        holder.list_layout.startAnimation(animation);
+                        //ScaleAnimation animation = new ScaleAnimation(1, 1, 1, 2);
+                        //animation.setDuration(2000);
+                        //holder.list_layout.setAnimation(animation);
+                        //holder.list_layout.startAnimation(animation);
 
-
-                        /*
                         holder.list_layout.setVisibility(View.GONE);
                         holder.read_layout.setVisibility(View.VISIBLE);
                         holder.bReadViewState = true;
-                        */
                     }
 
                     mListener.onItemClicked(pos);

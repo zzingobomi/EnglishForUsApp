@@ -138,6 +138,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Goo
                     Log.d("TOKEN", "Google Refresh Token");
                     FirebaseTokenManager.getInstance().refreshToken(getContext(), user);
 
+                    // TODO: 우선 메인으로.. 후에 바로 문장관리
                     startActivity(new Intent(getActivity(), MainActivity.class));
 
                 } else {
