@@ -16,6 +16,10 @@
             android:id="@+id/nav_myitemmanage"
             android:icon="@drawable/ic_menu_myitemmanage"
             android:title="내 문장 관리" />
+        <item
+            android:id="@+id/nav_ranking"
+            android:icon="@drawable/ic_menu_ranking"
+            android:title="순위표"/>
     </group>
 
     <item android:title="Communicate">

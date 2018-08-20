@@ -38,6 +38,7 @@ import com.zzingobomi.englishforus.auth.FirebaseTokenManager;
 import com.zzingobomi.englishforus.auth.LoginFragment;
 import com.zzingobomi.englishforus.myitemmanage.AddItemFragment;
 import com.zzingobomi.englishforus.myitemmanage.MyItemManageFragment;
+import com.zzingobomi.englishforus.ranking.RankingShowFragment;
 import com.zzingobomi.englishforus.study.StudyFragment;
 import com.zzingobomi.englishforus.vo.Item;
 
@@ -225,6 +226,9 @@ public class MainActivity extends AppCompatActivity
                 title = "Login";
             }
 
+        } else if (id == R.id.nav_ranking) {
+            fragment = new RankingShowFragment();
+            title = "Ranking";
         } else if (id == R.id.nav_bymade) {
             Toast.makeText(this, "보미야 사랑해", Toast.LENGTH_SHORT).show();
         }
