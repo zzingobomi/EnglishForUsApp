@@ -35,15 +35,21 @@ public class MyItemsRecyclerAdapter extends RecyclerView.Adapter<MyItemsRecycler
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         Item item = mDataList.get(position);
 
+        // List
         holder.list_title_ko.setText(item.getTitle_ko());
         holder.list_title_en.setText(item.getTitle_en());
 
+        holder.list_impression.setText(String.valueOf(item.getImpressioncnt()));
+        holder.list_like.setText(String.valueOf(item.getLikecnt()));
+        holder.list_bad.setText(String.valueOf(item.getBadcnt()));
+
+        // Read
         holder.title_ko.setText(item.getTitle_ko());
         holder.title_en.setText(item.getTitle_en());
         holder.addinfo.setText(item.getAddinfo());
 
         holder.item_impression.setText(String.valueOf(item.getImpressioncnt()));
-        holder.item_ike.setText(String.valueOf(item.getLikecnt()));
+        holder.item_like.setText(String.valueOf(item.getLikecnt()));
         holder.item_bad.setText(String.valueOf(item.getBadcnt()));
 
         if (mListener != null) {
@@ -93,13 +99,17 @@ public class MyItemsRecyclerAdapter extends RecyclerView.Adapter<MyItemsRecycler
         TextView list_title_ko;
         TextView list_title_en;
 
+        TextView list_impression;
+        TextView list_like;
+        TextView list_bad;
+
         // 하나의 아이템 Read 할 때
         TextView title_ko;
         TextView title_en;
         TextView addinfo;
 
         TextView item_impression;
-        TextView item_ike;
+        TextView item_like;
         TextView item_bad;
 
         Button modify_btn;
@@ -115,12 +125,16 @@ public class MyItemsRecyclerAdapter extends RecyclerView.Adapter<MyItemsRecycler
             list_title_ko = itemView.findViewById(R.id.myitem_card_list_title_ko);
             list_title_en = itemView.findViewById(R.id.myitem_card_list_title_en);
 
+            list_impression = itemView.findViewById(R.id.myitem_card_list_impression);
+            list_like = itemView.findViewById(R.id.myitem_card_list_like);
+            list_bad = itemView.findViewById(R.id.myitem_card_list_bad);
+
             title_ko = itemView.findViewById(R.id.myitem_title_ko);
             title_en = itemView.findViewById(R.id.myitem_title_en);
             addinfo = itemView.findViewById(R.id.myitem_addinfo);
 
             item_impression = itemView.findViewById(R.id.myitem_card_read_impression);
-            item_ike = itemView.findViewById(R.id.myitem_card_read_like);
+            item_like = itemView.findViewById(R.id.myitem_card_read_like);
             item_bad = itemView.findViewById(R.id.myitem_card_read_bad);
 
             modify_btn = itemView.findViewById(R.id.myitemmodify_btn);
