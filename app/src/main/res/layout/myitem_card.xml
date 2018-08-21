@@ -9,6 +9,7 @@
     android:layout_marginStart="16dp"
     android:layout_marginTop="16dp"
     app:cardCornerRadius="4dp"
+    android:animateLayoutChanges="true"
     app:cardElevation="8dp">
 
     <LinearLayout
@@ -81,26 +82,80 @@
         android:visibility="gone">
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginEnd="4dp"
+            android:textSize="12sp"
+            android:background="@color/light_grey"
+            android:text="한국어"/>
+        <TextView
             android:id="@+id/myitem_title_ko"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingStart="8dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:paddingEnd="4dp"
+            android:textSize="20sp"
             android:text="한국어문장"/>
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginEnd="4dp"
+            android:textSize="12sp"
+            android:background="@color/light_grey"
+            android:text="영어"/>
         <TextView
             android:id="@+id/myitem_title_en"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingStart="8dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:paddingEnd="4dp"
+            android:textSize="20sp"
             android:text="영어문장"/>
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginEnd="4dp"
+            android:textSize="12sp"
+            android:background="@color/light_grey"
+            android:text="부연 설명"/>
         <TextView
             android:id="@+id/myitem_addinfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="부연 설명"/>
+            android:paddingStart="8dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:paddingEnd="4dp"
+            android:textSize="12sp"
+            android:minLines="3"
+            android:text="부연 설명 내용"/>
+        <TextView
+            android:id="@+id/myitem_regdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:paddingEnd="8dp"
+            android:drawableStart="@drawable/ic_reply_regdate"
+            android:text="2018-08-21"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:orientation="horizontal">
             <LinearLayout
                 android:layout_width="wrap_content"

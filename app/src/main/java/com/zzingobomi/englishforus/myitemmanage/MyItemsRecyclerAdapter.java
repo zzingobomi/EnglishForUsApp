@@ -1,8 +1,10 @@
 package com.zzingobomi.englishforus.myitemmanage;
 
+import android.animation.LayoutTransition;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,16 +66,11 @@ public class MyItemsRecyclerAdapter extends RecyclerView.Adapter<MyItemsRecycler
                 public void onClick(View view) {
                     if(holder.bReadViewState) {
                         // 애니메이션 적용하기..
-                        holder.list_layout.setVisibility(View.VISIBLE);
                         holder.read_layout.setVisibility(View.GONE);
+                        holder.list_layout.setVisibility(View.VISIBLE);
                         holder.bReadViewState = false;
                     } else {
                         // 애니메이션 적용하기..
-                        //ScaleAnimation animation = new ScaleAnimation(1, 1, 1, 2);
-                        //animation.setDuration(2000);
-                        //holder.list_layout.setAnimation(animation);
-                        //holder.list_layout.startAnimation(animation);
-
                         holder.list_layout.setVisibility(View.GONE);
                         holder.read_layout.setVisibility(View.VISIBLE);
                         holder.bReadViewState = true;
@@ -96,6 +93,8 @@ public class MyItemsRecyclerAdapter extends RecyclerView.Adapter<MyItemsRecycler
             });
         }
     }
+
+
 
     @Override
     public int getItemCount() {
@@ -133,6 +132,26 @@ public class MyItemsRecyclerAdapter extends RecyclerView.Adapter<MyItemsRecycler
         public ViewHolder(View itemView) {
             super(itemView);
             myitem_card_view = itemView.findViewById(R.id.myitem_card_view);
+            LayoutTransition layoutTransition = myitem_card_view.getLayoutTransition();
+            layoutTransition.addTransitionListener(new LayoutTransition.TransitionListener() {
+                @Override
+                public void startTransition(LayoutTransition transition, ViewGroup container, View view, int transitionType) {
+                    if(view.getId() == R.id.myitem_card_list) {
+                        Log.d("VIEW", "startTransition myitem_card_list");
+                    } else if(view.getId() == R.id.myitem_card_read) {
+                        Log.d("VIEW", "startTransition myitem_card_read");
+                    }
+                }
+
+                @Override
+                public void endTransition(LayoutTransition transition, ViewGroup container, View view, int transitionType) {
+                    if(view.getId() == R.id.myitem_card_list) {
+                        Log.d("VIEW", "endTransition myitem_card_list");
+                    } else if(view.getId() == R.id.myitem_card_read) {
+                        Log.d("VIEW", "endTransition myitem_card_read");
+                    }
+                }
+            });
 
             list_title_ko = itemView.findViewById(R.id.myitem_card_list_title_ko);
             list_title_en = itemView.findViewById(R.id.myitem_card_list_title_en);
