@@ -13,6 +13,7 @@ import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -43,37 +44,12 @@ public class MyItemsRecyclerAdapter extends RecyclerView.Adapter<MyItemsRecycler
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         Item item = mDataList.get(position);
 
-        /*
-        TextView myitem_title_ko_literal;
-        TextView myitem_title_ko;
-        TextView myitem_title_en_literal;
-        TextView myitem_title_en;
-
-        LinearLayout myitem_addinfo_layout;
-        TextView myitem_addinfo;
-        TextView myitem_regdate;
-
-        LinearLayout myitem_social_info_layout;
-        TextView item_impression;
-        TextView item_like;
-        TextView item_bad;
-
-        LinearLayout myitem_button_layout;
-        Button modify_btn;
-        Button delete_btn;
-
-        LinearLayout myitem_list_bottom_layout;
-        TextView list_impression;
-        TextView list_like;
-        TextView list_bad;
-
-        Boolean bReadViewState;
-        */
-
-
         holder.myitem_title_ko.setText(item.getTitle_ko());
+        holder.myitem_title_ko_edit.setText(item.getTitle_ko());
         holder.myitem_title_en.setText(item.getTitle_en());
+        holder.myitem_title_en_edit.setText(item.getTitle_en());
         holder.myitem_addinfo.setText(item.getAddinfo());
+        holder.myitem_addinfo_edit.setText(item.getAddinfo());
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         holder.myitem_regdate.setText(simpleDateFormat.format(item.getRegdate()));
 
@@ -133,64 +109,38 @@ public class MyItemsRecyclerAdapter extends RecyclerView.Adapter<MyItemsRecycler
             holder.modify_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mListener.onModifyButtonClicked(pos);
-                }
-            });
-            holder.delete_btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mListener.onDeleteButtonClicked(pos);
-                }
-            });
-        }
-
-
-
-
-
-        /*
-        // List
-        holder.list_title_ko.setText(item.getTitle_ko());
-        holder.list_title_en.setText(item.getTitle_en());
-
-        holder.list_impression.setText(String.valueOf(item.getImpressioncnt()));
-        holder.list_like.setText(String.valueOf(item.getLikecnt()));
-        holder.list_bad.setText(String.valueOf(item.getBadcnt()));
-
-        // Read
-        holder.title_ko.setText(item.getTitle_ko());
-        holder.title_en.setText(item.getTitle_en());
-        holder.addinfo.setText(item.getAddinfo());
-
-        holder.item_impression.setText(String.valueOf(item.getImpressioncnt()));
-        holder.item_like.setText(String.valueOf(item.getLikecnt()));
-        holder.item_bad.setText(String.valueOf(item.getBadcnt()));
-
-        if (mListener != null) {
-            // 현재 위치
-            final int pos = holder.getAdapterPosition();
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if(holder.bReadViewState) {
-                        // 애니메이션 적용하기..
-                        holder.read_layout.setVisibility(View.GONE);
-                        holder.list_layout.setVisibility(View.VISIBLE);
-                        holder.bReadViewState = false;
+                    if(holder.modify_btn.getText().toString().equals("저장")) {
+                        mListener.onModifyButtonClicked(pos
+                                ,holder.myitem_title_ko_edit.getText().toString()
+                                ,holder.myitem_title_en_edit.getText().toString()
+                                ,holder.myitem_addinfo_edit.getText().toString()
+                        );
                     } else {
-                        // 애니메이션 적용하기..
-                        holder.list_layout.setVisibility(View.GONE);
-                        holder.read_layout.setVisibility(View.VISIBLE);
-                        holder.bReadViewState = true;
-                    }
+                        holder.myitem_title_ko.setVisibility(View.GONE);
+                        holder.myitem_title_ko_edit.setVisibility(View.VISIBLE);
+                        holder.myitem_title_en.setVisibility(View.GONE);
+                        holder.myitem_title_en_edit.setVisibility(View.VISIBLE);
+                        holder.myitem_addinfo.setVisibility(View.GONE);
+                        holder.myitem_addinfo_edit.setVisibility(View.VISIBLE);
 
-                    mListener.onItemClicked(pos);
+                        holder.modify_btn.setText("저장");
+                        holder.myitemmodify_cancel_btn_layout.setVisibility(View.VISIBLE);
+                    }
                 }
             });
-            holder.modify_btn.setOnClickListener(new View.OnClickListener() {
+            holder.modifycancel_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view) {
-                    mListener.onModifyButtonClicked(pos);
+                public void onClick(View v) {
+
+                    holder.myitem_title_ko.setVisibility(View.VISIBLE);
+                    holder.myitem_title_ko_edit.setVisibility(View.GONE);
+                    holder.myitem_title_en.setVisibility(View.VISIBLE);
+                    holder.myitem_title_en_edit.setVisibility(View.GONE);
+                    holder.myitem_addinfo.setVisibility(View.VISIBLE);
+                    holder.myitem_addinfo_edit.setVisibility(View.GONE);
+
+                    holder.modify_btn.setText("수정");
+                    holder.myitemmodify_cancel_btn_layout.setVisibility(View.GONE);
                 }
             });
             holder.delete_btn.setOnClickListener(new View.OnClickListener() {
@@ -200,24 +150,19 @@ public class MyItemsRecyclerAdapter extends RecyclerView.Adapter<MyItemsRecycler
                 }
             });
         }
-        */
-    }
-
-
-
-    @Override
-    public int getItemCount() {
-        return mDataList.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView myitem_title_ko_literal;
         TextView myitem_title_ko;
+        EditText myitem_title_ko_edit;
         TextView myitem_title_en_literal;
         TextView myitem_title_en;
+        EditText myitem_title_en_edit;
 
         LinearLayout myitem_addinfo_layout;
         TextView myitem_addinfo;
+        EditText myitem_addinfo_edit;
         TextView myitem_regdate;
 
         LinearLayout myitem_social_info_layout;
@@ -228,6 +173,8 @@ public class MyItemsRecyclerAdapter extends RecyclerView.Adapter<MyItemsRecycler
         LinearLayout myitem_button_layout;
         Button modify_btn;
         Button delete_btn;
+        LinearLayout myitemmodify_cancel_btn_layout;
+        Button modifycancel_btn;
 
         LinearLayout myitem_list_bottom_layout;
         TextView list_impression;
@@ -236,45 +183,19 @@ public class MyItemsRecyclerAdapter extends RecyclerView.Adapter<MyItemsRecycler
 
         Boolean bReadViewState;
 
-        /*
-        CardView myitem_card_view;
-
-        // ListView 에서 보여질 때
-        TextView list_title_ko;
-        TextView list_title_en;
-
-        TextView list_impression;
-        TextView list_like;
-        TextView list_bad;
-
-        // 하나의 아이템 Read 할 때
-        TextView title_ko;
-        TextView title_en;
-        TextView addinfo;
-
-        TextView item_impression;
-        TextView item_like;
-        TextView item_bad;
-
-        Button modify_btn;
-        Button delete_btn;
-
-        // 레이아웃
-        LinearLayout list_layout;
-        LinearLayout read_layout;
-        Boolean bReadViewState;
-        */
-
         public ViewHolder(View itemView) {
             super(itemView);
 
             myitem_title_ko_literal = itemView.findViewById(R.id.myitem_title_ko_literal);
             myitem_title_ko = itemView.findViewById(R.id.myitem_title_ko);
+            myitem_title_ko_edit = itemView.findViewById(R.id.myitem_title_ko_edit);
             myitem_title_en_literal = itemView.findViewById(R.id.myitem_title_en_literal);
             myitem_title_en = itemView.findViewById(R.id.myitem_title_en);
+            myitem_title_en_edit = itemView.findViewById(R.id.myitem_title_en_edit);
 
             myitem_addinfo_layout = itemView.findViewById(R.id.myitem_addinfo_layout);
             myitem_addinfo = itemView.findViewById(R.id.myitem_addinfo);
+            myitem_addinfo_edit = itemView.findViewById(R.id.myitem_addinfo_edit);
             myitem_regdate = itemView.findViewById(R.id.myitem_regdate);
 
             myitem_social_info_layout = itemView.findViewById(R.id.myitem_social_info_layout);
@@ -285,6 +206,8 @@ public class MyItemsRecyclerAdapter extends RecyclerView.Adapter<MyItemsRecycler
             myitem_button_layout = itemView.findViewById(R.id.myitem_button_layout);
             modify_btn = itemView.findViewById(R.id.myitemmodify_btn);
             delete_btn = itemView.findViewById(R.id.myitemdelete_btn);
+            myitemmodify_cancel_btn_layout = itemView.findViewById(R.id.myitemmodify_cancel_btn_layout);
+            modifycancel_btn = itemView.findViewById(R.id.myitemmodify_cancel_btn);
 
             myitem_list_bottom_layout = itemView.findViewById(R.id.myitem_list_bottom_layout);
             list_impression = itemView.findViewById(R.id.myitem_card_list_impression);
@@ -292,53 +215,12 @@ public class MyItemsRecyclerAdapter extends RecyclerView.Adapter<MyItemsRecycler
             list_bad = itemView.findViewById(R.id.myitem_card_list_bad);
 
             bReadViewState = false;
-
-            /*
-            myitem_card_view = itemView.findViewById(R.id.myitem_card_view);
-            LayoutTransition layoutTransition = myitem_card_view.getLayoutTransition();
-            layoutTransition.addTransitionListener(new LayoutTransition.TransitionListener() {
-                @Override
-                public void startTransition(LayoutTransition transition, ViewGroup container, View view, int transitionType) {
-                    if(view.getId() == R.id.myitem_card_list) {
-                        Log.d("VIEW", "startTransition myitem_card_list");
-                    } else if(view.getId() == R.id.myitem_card_read) {
-                        Log.d("VIEW", "startTransition myitem_card_read");
-                    }
-                }
-
-                @Override
-                public void endTransition(LayoutTransition transition, ViewGroup container, View view, int transitionType) {
-                    if(view.getId() == R.id.myitem_card_list) {
-                        Log.d("VIEW", "endTransition myitem_card_list");
-                    } else if(view.getId() == R.id.myitem_card_read) {
-                        Log.d("VIEW", "endTransition myitem_card_read");
-                    }
-                }
-            });
-
-            list_title_ko = itemView.findViewById(R.id.myitem_card_list_title_ko);
-            list_title_en = itemView.findViewById(R.id.myitem_card_list_title_en);
-
-            list_impression = itemView.findViewById(R.id.myitem_card_list_impression);
-            list_like = itemView.findViewById(R.id.myitem_card_list_like);
-            list_bad = itemView.findViewById(R.id.myitem_card_list_bad);
-
-            title_ko = itemView.findViewById(R.id.myitem_title_ko);
-            title_en = itemView.findViewById(R.id.myitem_title_en);
-            addinfo = itemView.findViewById(R.id.myitem_addinfo);
-
-            item_impression = itemView.findViewById(R.id.myitem_card_read_impression);
-            item_like = itemView.findViewById(R.id.myitem_card_read_like);
-            item_bad = itemView.findViewById(R.id.myitem_card_read_bad);
-
-            modify_btn = itemView.findViewById(R.id.myitemmodify_btn);
-            delete_btn = itemView.findViewById(R.id.myitemdelete_btn);
-
-            list_layout = itemView.findViewById(R.id.myitem_card_list);
-            read_layout = itemView.findViewById(R.id.myitem_card_read);
-            bReadViewState = false;
-            */
         }
+    }
+
+    @Override
+    public int getItemCount() {
+        return mDataList.size();
     }
 
     @Override
@@ -350,12 +232,16 @@ public class MyItemsRecyclerAdapter extends RecyclerView.Adapter<MyItemsRecycler
         mListener = listener;
     }
 
+    public Item getItem(int position) {
+        return mDataList.get(position);
+    }
+
     public interface MyItemsRecyclerViewClickListener {
         // 아이템 전체 부분의 클릭
         void onItemClicked(int position);
 
         // Modify 버튼 클릭
-        void onModifyButtonClicked(int position);
+        void onModifyButtonClicked(int position, String titleKor, String titleEng, String addInfo);
 
         // Delete 버튼 클릭
         void onDeleteButtonClicked(int position);

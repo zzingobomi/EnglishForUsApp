@@ -141,8 +141,14 @@ public class MyItemManageFragment extends Fragment implements MyItemsRecyclerAda
     }
 
     @Override
-    public void onModifyButtonClicked(int position) {
-        Log.d(TAG, "onModifyButtonClicked: " + position);
+    public void onModifyButtonClicked(int position, String titleKor, String titleEng, String addInfo) {
+        Item modifyItem = mAdapter.getItem(position);
+        new HttpModifyItemAsyncTask(this).execute("http://englishforus.zzingobomi.synology.me/itemapi/myitem/" + modifyItem.getIdx()
+                ,titleKor
+                ,titleEng
+                ,addInfo
+                ,modifyItem.getRegidemail()
+        );
     }
 
     @Override
@@ -256,7 +262,94 @@ public class MyItemManageFragment extends Fragment implements MyItemsRecyclerAda
         }
     }
 
+    ///
+    /// 내 문장 수정하기
+    ///
+    private static class HttpModifyItemAsyncTask extends AsyncTask<String, Void, Item> {
 
+        private WeakReference<MyItemManageFragment> fragmentWeakReference;
+        OkHttpClient client = new OkHttpClient();
+        MaterialDialog waitDialog;
+
+        HttpModifyItemAsyncTask(MyItemManageFragment fragment) {
+            fragmentWeakReference = new WeakReference<>(fragment);
+            waitDialog = new MaterialDialog.Builder(fragment.getActivity())
+                    .title(R.string.wait_progress_title)
+                    .content(R.string.wait_progress_content)
+                    .progress(true, 0)
+                    .cancelable(false)
+                    .show();
+        }
+
+        @Override
+        protected Item doInBackground(String... params) {
+
+            // for debug worker thread
+            if(android.os.Debug.isDebuggerConnected())
+                android.os.Debug.waitForDebugger();
+
+            String strUrl = params[0];
+            String strTitleKo = params[1];
+            String strTitleEn = params[2];
+            String strAddInfo = params[3];
+            String strRegIdEmail = params[4];
+            Item resultItem = null;
+            //Item item = new Item(strTitleKo, strTitleEn, strAddInfo, strRegIdEmail, strRegDisplayName);
+
+            try {
+                JsonObject json = new JsonObject();
+                json.addProperty("idtoken", FirebaseTokenManager.getInstance().getToken());
+                json.addProperty("title_ko", strTitleKo);
+                json.addProperty("title_en", strTitleEn);
+                json.addProperty("addinfo", strAddInfo);
+                json.addProperty("regidemail", strRegIdEmail);
+                RequestBody requestBody = RequestBody.create(JSON, json.toString());
+
+                /*
+                // 다른 좋은 방법 있기 전까지... 그냥 값 집어넣어서 보내기 ItemVO 에 맵핑하는 방법이 있을텐데..
+                Gson gson = new Gson();
+                RequestBody requestBody = RequestBody.create(
+                        MediaType.parse("application/json; charset=utf-8")
+                        ,gson.toJson(item));
+                        */
+
+                Request request = new Request.Builder()
+                        .url(strUrl)
+                        .post(requestBody)
+                        .build();
+                Response response = client.newCall(request).execute();
+
+                // TimeStamp(DB 시간) to Date(Java 시간) 를 위해
+                GsonBuilder builder = new GsonBuilder();
+                builder.registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {
+                    public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+                        return new Date(json.getAsJsonPrimitive().getAsLong());
+                    }
+                });
+                Gson gson = builder.create();
+                Type listType = new TypeToken<Item>() {}.getType();
+                resultItem = gson.fromJson(response.body().string(), listType);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return resultItem;
+        }
+
+        @Override
+        protected void onPostExecute(Item resultItem) {
+            super.onPostExecute(resultItem);
+            waitDialog.dismiss();
+            if(resultItem != null) {
+                Log.d(TAG, "Response:SUCCESS");
+
+                final MyItemManageFragment fragment = fragmentWeakReference.get();
+                if(fragment == null || fragment.isDetached()) return;
+
+                // Adapter 변경해주고... 리스트나 Read 보여주는걸로 마무리..
+            }
+        }
+    }
 
     ///
     /// 내 문장 삭제하기

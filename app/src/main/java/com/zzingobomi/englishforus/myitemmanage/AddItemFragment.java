@@ -189,8 +189,6 @@ public class AddItemFragment extends Fragment {
             if(android.os.Debug.isDebuggerConnected())
                 android.os.Debug.waitForDebugger();
 
-            String strResponse = "";
-
             String strUrl = params[0];
             String strTitleKo = params[1];
             String strTitleEn = params[2];
