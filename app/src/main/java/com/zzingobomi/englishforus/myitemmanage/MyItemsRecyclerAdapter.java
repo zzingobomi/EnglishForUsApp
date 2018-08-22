@@ -1,6 +1,7 @@
 package com.zzingobomi.englishforus.myitemmanage;
 
 import android.animation.LayoutTransition;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -25,10 +26,12 @@ import java.util.List;
 
 public class MyItemsRecyclerAdapter extends RecyclerView.Adapter<MyItemsRecyclerAdapter.ViewHolder> {
 
+    private Context mContext;
     private final List<Item> mDataList;
     private MyItemsRecyclerViewClickListener mListener;
 
-    public MyItemsRecyclerAdapter(List<Item> dataList) {
+    public MyItemsRecyclerAdapter(List<Item> dataList, Context context) {
+        mContext = context;
         mDataList = dataList;
     }
 
@@ -109,7 +112,7 @@ public class MyItemsRecyclerAdapter extends RecyclerView.Adapter<MyItemsRecycler
             holder.modify_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(holder.modify_btn.getText().toString().equals("저장")) {
+                    if(holder.modify_btn.getText().toString().equals(mContext.getResources().getString(R.string.common_modify_save_text))) {
                         mListener.onModifyButtonClicked(pos
                                 ,holder.myitem_title_ko_edit.getText().toString()
                                 ,holder.myitem_title_en_edit.getText().toString()
@@ -123,7 +126,7 @@ public class MyItemsRecyclerAdapter extends RecyclerView.Adapter<MyItemsRecycler
                         holder.myitem_addinfo.setVisibility(View.GONE);
                         holder.myitem_addinfo_edit.setVisibility(View.VISIBLE);
 
-                        holder.modify_btn.setText("저장");
+                        holder.modify_btn.setText(mContext.getResources().getString(R.string.common_modify_save_text));
                         holder.myitemmodify_cancel_btn_layout.setVisibility(View.VISIBLE);
                     }
                 }
@@ -139,7 +142,7 @@ public class MyItemsRecyclerAdapter extends RecyclerView.Adapter<MyItemsRecycler
                     holder.myitem_addinfo.setVisibility(View.VISIBLE);
                     holder.myitem_addinfo_edit.setVisibility(View.GONE);
 
-                    holder.modify_btn.setText("수정");
+                    holder.modify_btn.setText(mContext.getResources().getString(R.string.common_modify_text));
                     holder.myitemmodify_cancel_btn_layout.setVisibility(View.GONE);
                 }
             });

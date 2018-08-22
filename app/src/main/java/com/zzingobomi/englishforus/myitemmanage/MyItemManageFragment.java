@@ -255,7 +255,7 @@ public class MyItemManageFragment extends Fragment implements MyItemsRecyclerAda
                 //}
 
                 // 어댑터 설정
-                fragment.mAdapter = new MyItemsRecyclerAdapter(items);
+                fragment.mAdapter = new MyItemsRecyclerAdapter(items, fragment.getContext());
                 fragment.mAdapter.setOnClickListener(fragment);
                 fragment.mRecyclerView.setAdapter(fragment.mAdapter);
             }

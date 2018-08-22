@@ -867,14 +867,14 @@ public class StudyFragment extends Fragment {
                     replyModify.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if(replyModify.getText().toString().equals("저장")) {
+                            if(replyModify.getText().toString().equals(fragment.getResources().getString(R.string.common_modify_save_text))) {
                                 String reqUrl = "http://englishforus.zzingobomi.synology.me/replies/" + replyIdx.getText().toString();
                                 new HttpReplyModifyAsyncTask(fragment).execute(reqUrl, replyContentsEdit.getText().toString());
                             } else {
                                 replyContents.setVisibility(View.GONE);
                                 replyContentsEdit.setVisibility(View.VISIBLE);
 
-                                replyModify.setText("저장");
+                                replyModify.setText(fragment.getResources().getString(R.string.common_modify_save_text));
                                 replyModifyCancel.setVisibility(View.VISIBLE);
                             }
                         }
@@ -885,7 +885,7 @@ public class StudyFragment extends Fragment {
                             replyContents.setVisibility(View.VISIBLE);
                             replyContentsEdit.setVisibility(View.GONE);
 
-                            replyModify.setText("수정");
+                            replyModify.setText(fragment.getResources().getString(R.string.common_modify_text));
                             replyModifyCancel.setVisibility(View.GONE);
                         }
                     });
