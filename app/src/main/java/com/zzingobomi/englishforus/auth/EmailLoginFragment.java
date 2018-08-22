@@ -74,8 +74,8 @@ public class EmailLoginFragment extends Fragment implements View.OnClickListener
             }
 
             final MaterialDialog waitDialog = new MaterialDialog.Builder(getActivity())
-                    .title(R.string.wait_progress_title)
-                    .content(R.string.wait_progress_content)
+                    .title(R.string.common_wait_progress_title)
+                    .content(R.string.common_wait_progress_content)
                     .progress(true, 0)
                     .cancelable(false)
                     .show();

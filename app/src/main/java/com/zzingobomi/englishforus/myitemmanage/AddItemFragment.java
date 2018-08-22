@@ -175,8 +175,8 @@ public class AddItemFragment extends Fragment {
         HttpAddItemAsyncTask(AddItemFragment fragment) {
             fragmentWeakReference = new WeakReference<>(fragment);
             waitDialog = new MaterialDialog.Builder(fragment.getActivity())
-                    .title(R.string.wait_progress_title)
-                    .content(R.string.wait_progress_content)
+                    .title(R.string.common_wait_progress_title)
+                    .content(R.string.common_wait_progress_content)
                     .progress(true, 0)
                     .cancelable(false)
                     .show();

@@ -159,8 +159,8 @@ public class MyItemManageFragment extends Fragment implements MyItemsRecyclerAda
         new MaterialDialog.Builder(getContext())
                 .title("문장 삭제")
                 .content("문장을 정말로 삭제하시겠습니까?")
-                .positiveText(R.string.agree)
-                .negativeText(R.string.disagree)
+                .positiveText(R.string.common_agree)
+                .negativeText(R.string.common_disagree)
                 .positiveColor(Color.BLACK)
                 .negativeColor(Color.BLACK)
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
@@ -188,8 +188,8 @@ public class MyItemManageFragment extends Fragment implements MyItemsRecyclerAda
         HttpMyItemsAsyncTask(MyItemManageFragment fragment) {
             fragmentWeakReference = new WeakReference<>(fragment);
             waitDialog = new MaterialDialog.Builder(fragment.getActivity())
-                    .title(R.string.wait_progress_title)
-                    .content(R.string.wait_progress_content)
+                    .title(R.string.common_wait_progress_title)
+                    .content(R.string.common_wait_progress_content)
                     .progress(true, 0)
                     .cancelable(false)
                     .show();
@@ -274,8 +274,8 @@ public class MyItemManageFragment extends Fragment implements MyItemsRecyclerAda
         HttpModifyItemAsyncTask(MyItemManageFragment fragment) {
             fragmentWeakReference = new WeakReference<>(fragment);
             waitDialog = new MaterialDialog.Builder(fragment.getActivity())
-                    .title(R.string.wait_progress_title)
-                    .content(R.string.wait_progress_content)
+                    .title(R.string.common_wait_progress_title)
+                    .content(R.string.common_wait_progress_content)
                     .progress(true, 0)
                     .cancelable(false)
                     .show();
@@ -362,8 +362,8 @@ public class MyItemManageFragment extends Fragment implements MyItemsRecyclerAda
         HttpMyItemDeleteAsyncTask(MyItemManageFragment fragment) {
             fragmentWeakReference = new WeakReference<>(fragment);
             waitDialog = new MaterialDialog.Builder(fragment.getActivity())
-                    .title(R.string.wait_progress_title)
-                    .content(R.string.wait_progress_content)
+                    .title(R.string.common_wait_progress_title)
+                    .content(R.string.common_wait_progress_content)
                     .progress(true, 0)
                     .cancelable(false)
                     .show();

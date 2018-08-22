@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity
             Log.d("TOKEN", "MainActivity Refresh Token");
             FirebaseTokenManager.getInstance().refreshToken(getApplicationContext(), mFirebaseUser);
         } else {
-            setUserInfoNavHeader(getString(R.string.anonymous_name), null);
+            setUserInfoNavHeader(getString(R.string.common_anonymous_name), null);
         }
 
         // 전면 광고
@@ -177,7 +177,7 @@ public class MainActivity extends AppCompatActivity
                 Auth.GoogleSignInApi.signOut(mGoogleApiClient);
             }
             mUsername = "";
-            setUserInfoNavHeader(getString(R.string.anonymous_name), null);
+            setUserInfoNavHeader(getString(R.string.common_anonymous_name), null);
             goHome();
             return true;
         }

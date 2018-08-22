@@ -20,7 +20,7 @@
         android:textAlignment="center"
         android:layout_below="@id/home_image"
         android:layout_centerHorizontal="true"
-        android:text="@string/home_text" />
+        android:text="@string/home_main_text" />
     <com.google.android.gms.ads.AdView
         xmlns:ads="http://schemas.android.com/apk/res-auto"
         android:id="@+id/adview_home_banner"

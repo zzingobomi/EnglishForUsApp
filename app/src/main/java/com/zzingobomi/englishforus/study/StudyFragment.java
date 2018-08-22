@@ -326,7 +326,7 @@ public class StudyFragment extends Fragment {
 
             new HttpItemLikeAsyncTask(this).execute(reqUrl, regIdEmail, String.valueOf(mCurItem.isLikestate()));
         } else {
-            Toast.makeText(getContext(), getContext().getString(R.string.need_login), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getContext().getString(R.string.common_need_login), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -339,7 +339,7 @@ public class StudyFragment extends Fragment {
 
             new HttpItemBadAsyncTask(this).execute(reqUrl, regIdEmail, String.valueOf(mCurItem.isBadstate()));
         } else {
-            Toast.makeText(getContext(), getContext().getString(R.string.need_login), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getContext().getString(R.string.common_need_login), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -378,8 +378,8 @@ public class StudyFragment extends Fragment {
         HttpOneItemAsyncTask(StudyFragment fragment) {
             fragmentWeakReference = new WeakReference<>(fragment);
             waitDialog = new MaterialDialog.Builder(fragment.getActivity())
-                    .title(R.string.wait_progress_title)
-                    .content(R.string.wait_progress_content)
+                    .title(R.string.common_wait_progress_title)
+                    .content(R.string.common_wait_progress_content)
                     .progress(true, 0)
                     .cancelable(false)
                     .show();
@@ -452,19 +452,19 @@ public class StudyFragment extends Fragment {
                 displayname.setText("Made By " + item.getRegdisplayname());
 
                 Button replybtn = fragment.getView().findViewById(R.id.replyshow_btn);
-                replybtn.setText(fragment.getActivity().getString(R.string.replyshowbtn_text) + " [" + item.getReplycnt() + "]");
+                replybtn.setText(fragment.getActivity().getString(R.string.study_replyshowbtn_text) + " [" + item.getReplycnt() + "]");
 
                 Button likebtn = fragment.getView().findViewById(R.id.like_btn);
                 if(item.isLikestate()) {
-                    likebtn.setText(fragment.getActivity().getString(R.string.likecancelbtn_text) + " [" + item.getLikecnt() + "]");
+                    likebtn.setText(fragment.getActivity().getString(R.string.common_likecancelbtn_text) + " [" + item.getLikecnt() + "]");
                 } else {
-                    likebtn.setText(fragment.getActivity().getString(R.string.likebtn_text) + " [" + item.getLikecnt() + "]");
+                    likebtn.setText(fragment.getActivity().getString(R.string.common_likebtn_text) + " [" + item.getLikecnt() + "]");
                 }
                 Button badbtn = fragment.getView().findViewById(R.id.bad_btn);
                 if(item.isBadstate()) {
-                    badbtn.setText(fragment.getActivity().getString(R.string.badcancelbtn_text) + " [" + item.getBadcnt() + "]");
+                    badbtn.setText(fragment.getActivity().getString(R.string.common_badcancelbtn_text) + " [" + item.getBadcnt() + "]");
                 } else {
-                    badbtn.setText(fragment.getActivity().getString(R.string.badbtn_text) + " [" + item.getBadcnt() + "]");
+                    badbtn.setText(fragment.getActivity().getString(R.string.common_badbtn_text) + " [" + item.getBadcnt() + "]");
                 }
 
                 title_en.setVisibility(View.INVISIBLE);
@@ -494,8 +494,8 @@ public class StudyFragment extends Fragment {
         HttpItemLikeAsyncTask(StudyFragment fragment) {
             fragmentWeakReference = new WeakReference<>(fragment);
             waitDialog = new MaterialDialog.Builder(fragment.getActivity())
-                    .title(R.string.wait_progress_title)
-                    .content(R.string.wait_progress_content)
+                    .title(R.string.common_wait_progress_title)
+                    .content(R.string.common_wait_progress_content)
                     .progress(true, 0)
                     .cancelable(false)
                     .show();
@@ -574,9 +574,9 @@ public class StudyFragment extends Fragment {
 
                 Button likeBtn = fragment.getView().findViewById(R.id.like_btn);
                 if(item.isLikestate()) {
-                    likeBtn.setText(fragment.getActivity().getString(R.string.likecancelbtn_text) + " [" + item.getLikecnt() + "]");
+                    likeBtn.setText(fragment.getActivity().getString(R.string.common_likecancelbtn_text) + " [" + item.getLikecnt() + "]");
                 } else {
-                    likeBtn.setText(fragment.getActivity().getString(R.string.likebtn_text) + " [" + item.getLikecnt() + "]");
+                    likeBtn.setText(fragment.getActivity().getString(R.string.common_likebtn_text) + " [" + item.getLikecnt() + "]");
                 }
             }
         }
@@ -594,8 +594,8 @@ public class StudyFragment extends Fragment {
         HttpItemBadAsyncTask(StudyFragment fragment) {
             fragmentWeakReference = new WeakReference<>(fragment);
             waitDialog = new MaterialDialog.Builder(fragment.getActivity())
-                    .title(R.string.wait_progress_title)
-                    .content(R.string.wait_progress_content)
+                    .title(R.string.common_wait_progress_title)
+                    .content(R.string.common_wait_progress_content)
                     .progress(true, 0)
                     .cancelable(false)
                     .show();
@@ -676,9 +676,9 @@ public class StudyFragment extends Fragment {
 
                 Button badBtn = fragment.getView().findViewById(R.id.bad_btn);
                 if(item.isBadstate()) {
-                    badBtn.setText(fragment.getActivity().getString(R.string.badcancelbtn_text) + " [" + item.getBadcnt() + "]");
+                    badBtn.setText(fragment.getActivity().getString(R.string.common_badcancelbtn_text) + " [" + item.getBadcnt() + "]");
                 } else {
-                    badBtn.setText(fragment.getActivity().getString(R.string.badbtn_text) + " [" + item.getBadcnt() + "]");
+                    badBtn.setText(fragment.getActivity().getString(R.string.common_badbtn_text) + " [" + item.getBadcnt() + "]");
                 }
             }
         }
@@ -697,8 +697,8 @@ public class StudyFragment extends Fragment {
         HttpReplyAsyncTask(StudyFragment fragment) {
             fragmentWeakReference = new WeakReference<>(fragment);
             waitDialog = new MaterialDialog.Builder(fragment.getActivity())
-                    .title(R.string.wait_progress_title)
-                    .content(R.string.wait_progress_content)
+                    .title(R.string.common_wait_progress_title)
+                    .content(R.string.common_wait_progress_content)
                     .progress(true, 0)
                     .cancelable(false)
                     .show();
@@ -834,14 +834,14 @@ public class StudyFragment extends Fragment {
 
                     // 받아온 정보에 따라 다르게 버튼 셋팅
                     if(replyItem.isLikestate()) {
-                        replyLike.setText(fragment.getActivity().getString(R.string.likecancelbtn_text) + " [" + replyItem.getLikecnt() + "]");
+                        replyLike.setText(fragment.getActivity().getString(R.string.common_likecancelbtn_text) + " [" + replyItem.getLikecnt() + "]");
                     } else {
-                        replyLike.setText(fragment.getActivity().getString(R.string.likebtn_text) + " [" + replyItem.getLikecnt() + "]");
+                        replyLike.setText(fragment.getActivity().getString(R.string.common_likebtn_text) + " [" + replyItem.getLikecnt() + "]");
                     }
                     if(replyItem.isBadstate()) {
-                        replyBad.setText(fragment.getActivity().getString(R.string.badcancelbtn_text) + " [" + replyItem.getBadcnt() + "]");
+                        replyBad.setText(fragment.getActivity().getString(R.string.common_badcancelbtn_text) + " [" + replyItem.getBadcnt() + "]");
                     } else {
-                        replyBad.setText(fragment.getActivity().getString(R.string.badbtn_text) + " [" + replyItem.getBadcnt() + "]");
+                        replyBad.setText(fragment.getActivity().getString(R.string.common_badbtn_text) + " [" + replyItem.getBadcnt() + "]");
                     }
 
                     // 각 댓글들의 버튼 셋팅
@@ -893,10 +893,10 @@ public class StudyFragment extends Fragment {
                         @Override
                         public void onClick(View v) {
                             new MaterialDialog.Builder(fragment.getContext())
-                                    .title(R.string.reply_delete_title)
-                                    .content(R.string.reply_delete_content)
-                                    .positiveText(R.string.agree)
-                                    .negativeText(R.string.disagree)
+                                    .title(R.string.study_reply_delete_title)
+                                    .content(R.string.study_reply_delete_content)
+                                    .positiveText(R.string.common_agree)
+                                    .negativeText(R.string.common_disagree)
                                     .positiveColor(Color.BLACK)
                                     .negativeColor(Color.BLACK)
                                     .onPositive(new MaterialDialog.SingleButtonCallback() {
@@ -921,7 +921,7 @@ public class StudyFragment extends Fragment {
                                     }
                                 }
                             } else {
-                                Toast.makeText(fragment.getContext(), fragment.getContext().getString(R.string.need_login), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(fragment.getContext(), fragment.getContext().getString(R.string.common_need_login), Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -937,7 +937,7 @@ public class StudyFragment extends Fragment {
                                     }
                                 }
                             } else {
-                                Toast.makeText(fragment.getContext(), fragment.getContext().getString(R.string.need_login), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(fragment.getContext(), fragment.getContext().getString(R.string.common_need_login), Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -960,8 +960,8 @@ public class StudyFragment extends Fragment {
         HttpReplyLikeAsyncTask(StudyFragment fragment) {
             fragmentWeakReference = new WeakReference<>(fragment);
             waitDialog = new MaterialDialog.Builder(fragment.getActivity())
-                    .title(R.string.wait_progress_title)
-                    .content(R.string.wait_progress_content)
+                    .title(R.string.common_wait_progress_title)
+                    .content(R.string.common_wait_progress_content)
                     .progress(true, 0)
                     .cancelable(false)
                     .show();
@@ -1050,9 +1050,9 @@ public class StudyFragment extends Fragment {
                     if(replyIdx != null && replyIdx.getText().toString().equals(String.valueOf(replyItem.getIdx()))) {
                         TextView replyLike = fragment.mReplyLinearLayout.getChildAt(i).findViewById(R.id.like_reply);
                         if(replyItem.isLikestate()) {
-                            replyLike.setText(fragment.getActivity().getString(R.string.likecancelbtn_text) + " [" + replyItem.getLikecnt() + "]");
+                            replyLike.setText(fragment.getActivity().getString(R.string.common_likecancelbtn_text) + " [" + replyItem.getLikecnt() + "]");
                         } else {
-                            replyLike.setText(fragment.getActivity().getString(R.string.likebtn_text) + " [" + replyItem.getLikecnt() + "]");
+                            replyLike.setText(fragment.getActivity().getString(R.string.common_likebtn_text) + " [" + replyItem.getLikecnt() + "]");
                         }
                         break;
                     }
@@ -1073,8 +1073,8 @@ public class StudyFragment extends Fragment {
         HttpReplyBadAsyncTask(StudyFragment fragment) {
             fragmentWeakReference = new WeakReference<>(fragment);
             waitDialog = new MaterialDialog.Builder(fragment.getActivity())
-                    .title(R.string.wait_progress_title)
-                    .content(R.string.wait_progress_content)
+                    .title(R.string.common_wait_progress_title)
+                    .content(R.string.common_wait_progress_content)
                     .progress(true, 0)
                     .cancelable(false)
                     .show();
@@ -1164,9 +1164,9 @@ public class StudyFragment extends Fragment {
                     if(replyIdx != null && replyIdx.getText().toString().equals(String.valueOf(replyItem.getIdx()))) {
                         TextView replyBad = fragment.mReplyLinearLayout.getChildAt(i).findViewById(R.id.bad_reply);
                         if(replyItem.isBadstate()) {
-                            replyBad.setText(fragment.getActivity().getString(R.string.badcancelbtn_text) + " [" + replyItem.getBadcnt() + "]");
+                            replyBad.setText(fragment.getActivity().getString(R.string.common_badcancelbtn_text) + " [" + replyItem.getBadcnt() + "]");
                         } else {
-                            replyBad.setText(fragment.getActivity().getString(R.string.badbtn_text) + " [" + replyItem.getBadcnt() + "]");
+                            replyBad.setText(fragment.getActivity().getString(R.string.common_badbtn_text) + " [" + replyItem.getBadcnt() + "]");
                         }
                         break;
                     }
@@ -1186,8 +1186,8 @@ public class StudyFragment extends Fragment {
         HttpReplyCreateAsyncTask(StudyFragment fragment) {
             fragmentWeakReference = new WeakReference<>(fragment);
             waitDialog = new MaterialDialog.Builder(fragment.getActivity())
-                    .title(R.string.wait_progress_title)
-                    .content(R.string.wait_progress_content)
+                    .title(R.string.common_wait_progress_title)
+                    .content(R.string.common_wait_progress_content)
                     .progress(true, 0)
                     .cancelable(false)
                     .show();
@@ -1271,8 +1271,8 @@ public class StudyFragment extends Fragment {
         HttpReplyModifyAsyncTask(StudyFragment fragment) {
             fragmentWeakReference = new WeakReference<>(fragment);
             waitDialog = new MaterialDialog.Builder(fragment.getActivity())
-                    .title(R.string.wait_progress_title)
-                    .content(R.string.wait_progress_content)
+                    .title(R.string.common_wait_progress_title)
+                    .content(R.string.common_wait_progress_content)
                     .progress(true, 0)
                     .cancelable(false)
                     .show();
@@ -1339,8 +1339,8 @@ public class StudyFragment extends Fragment {
         HttpReplyDeleteAsyncTask(StudyFragment fragment) {
             fragmentWeakReference = new WeakReference<>(fragment);
             waitDialog = new MaterialDialog.Builder(fragment.getActivity())
-                    .title(R.string.wait_progress_title)
-                    .content(R.string.wait_progress_content)
+                    .title(R.string.common_wait_progress_title)
+                    .content(R.string.common_wait_progress_content)
                     .progress(true, 0)
                     .cancelable(false)
                     .show();
