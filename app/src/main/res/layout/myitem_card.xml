@@ -13,75 +13,12 @@
     app:cardElevation="8dp">
 
     <LinearLayout
-        android:id="@+id/myitem_card_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="visible">
-        <TextView
-            android:id="@+id/myitem_card_list_title_ko"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="8dp"
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp"
-            android:paddingEnd="4dp"
-            android:textSize="20sp"
-            android:text="한국어문장"/>
-        <TextView
-            android:id="@+id/myitem_card_list_title_en"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="8dp"
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp"
-            android:paddingEnd="4dp"
-            android:textSize="20sp"
-            android:text="영어문장"/>
-        <View
-            android:background="@color/light_grey"
-            android:layout_width="match_parent"
-            android:layout_height="2px"/>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/myitem_card_list_impression"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_myitem_impression"
-                android:layout_toStartOf="@id/myitem_card_list_like"
-                android:layout_marginEnd="8dp"
-                android:text="10" />
-            <TextView
-                android:id="@+id/myitem_card_list_like"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_myitem_like"
-                android:layout_toStartOf="@id/myitem_card_list_bad"
-                android:layout_marginEnd="8dp"
-                android:text="10" />
-            <TextView
-                android:id="@+id/myitem_card_list_bad"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_myitem_bad"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="8dp"
-                android:text="10" />
-        </RelativeLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/myitem_card_read"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:orientation="vertical" >
 
         <TextView
+            android:id="@+id/myitem_title_ko_literal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -90,6 +27,7 @@
             android:layout_marginEnd="4dp"
             android:textSize="12sp"
             android:background="@color/light_grey"
+            android:visibility="gone"
             android:text="한국어"/>
         <TextView
             android:id="@+id/myitem_title_ko"
@@ -102,6 +40,7 @@
             android:textSize="20sp"
             android:text="한국어문장"/>
         <TextView
+            android:id="@+id/myitem_title_en_literal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -110,6 +49,7 @@
             android:layout_marginEnd="4dp"
             android:textSize="12sp"
             android:background="@color/light_grey"
+            android:visibility="gone"
             android:text="영어"/>
         <TextView
             android:id="@+id/myitem_title_en"
@@ -121,42 +61,51 @@
             android:paddingEnd="4dp"
             android:textSize="20sp"
             android:text="영어문장"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="0dp"
-            android:layout_marginEnd="4dp"
-            android:textSize="12sp"
-            android:background="@color/light_grey"
-            android:text="부연 설명"/>
-        <TextView
-            android:id="@+id/myitem_addinfo"
+        <LinearLayout
+            android:id="@+id/myitem_addinfo_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="8dp"
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp"
-            android:paddingEnd="4dp"
-            android:textSize="12sp"
-            android:minLines="3"
-            android:text="부연 설명 내용"/>
-        <TextView
-            android:id="@+id/myitem_regdate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:paddingEnd="8dp"
-            android:drawableStart="@drawable/ic_reply_regdate"
-            android:text="2018-08-21"/>
+            android:orientation="vertical"
+            android:visibility="gone">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="0dp"
+                android:layout_marginEnd="4dp"
+                android:textSize="12sp"
+                android:background="@color/light_grey"
+                android:text="부연 설명"/>
+            <TextView
+                android:id="@+id/myitem_addinfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="8dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:paddingEnd="4dp"
+                android:textSize="12sp"
+                android:minLines="3"
+                android:text="부연 설명 내용"/>
+            <TextView
+                android:id="@+id/myitem_regdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:paddingEnd="8dp"
+                android:drawableStart="@drawable/ic_reply_regdate"
+                android:text="2018-08-21"/>
+        </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/myitem_social_info_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -220,9 +169,11 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/myitem_button_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
             <View
                 android:background="@color/black"
                 android:layout_width="match_parent"
@@ -257,6 +208,48 @@
 
             </LinearLayout>
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/myitem_list_bottom_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible">
+            <View
+                android:background="@color/light_grey"
+                android:layout_width="match_parent"
+                android:layout_height="2px"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/myitem_card_list_impression"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_myitem_impression"
+                    android:layout_toStartOf="@id/myitem_card_list_like"
+                    android:layout_marginEnd="8dp"
+                    android:text="10" />
+                <TextView
+                    android:id="@+id/myitem_card_list_like"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_myitem_like"
+                    android:layout_toStartOf="@id/myitem_card_list_bad"
+                    android:layout_marginEnd="8dp"
+                    android:text="10" />
+                <TextView
+                    android:id="@+id/myitem_card_list_bad"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_myitem_bad"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="8dp"
+                    android:text="10" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </android.support.v7.widget.CardView>

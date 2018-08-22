@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import com.zzingobomi.englishforus.R;
 import com.zzingobomi.englishforus.vo.Item;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class MyItemsRecyclerAdapter extends RecyclerView.Adapter<MyItemsRecyclerAdapter.ViewHolder> {
@@ -41,6 +43,112 @@ public class MyItemsRecyclerAdapter extends RecyclerView.Adapter<MyItemsRecycler
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         Item item = mDataList.get(position);
 
+        /*
+        TextView myitem_title_ko_literal;
+        TextView myitem_title_ko;
+        TextView myitem_title_en_literal;
+        TextView myitem_title_en;
+
+        LinearLayout myitem_addinfo_layout;
+        TextView myitem_addinfo;
+        TextView myitem_regdate;
+
+        LinearLayout myitem_social_info_layout;
+        TextView item_impression;
+        TextView item_like;
+        TextView item_bad;
+
+        LinearLayout myitem_button_layout;
+        Button modify_btn;
+        Button delete_btn;
+
+        LinearLayout myitem_list_bottom_layout;
+        TextView list_impression;
+        TextView list_like;
+        TextView list_bad;
+
+        Boolean bReadViewState;
+        */
+
+
+        holder.myitem_title_ko.setText(item.getTitle_ko());
+        holder.myitem_title_en.setText(item.getTitle_en());
+        holder.myitem_addinfo.setText(item.getAddinfo());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        holder.myitem_regdate.setText(simpleDateFormat.format(item.getRegdate()));
+
+        holder.item_impression.setText(String.valueOf(item.getImpressioncnt()));
+        holder.item_like.setText(String.valueOf(item.getLikecnt()));
+        holder.item_bad.setText(String.valueOf(item.getBadcnt()));
+
+        holder.list_impression.setText(String.valueOf(item.getImpressioncnt()));
+        holder.list_like.setText(String.valueOf(item.getLikecnt()));
+        holder.list_bad.setText(String.valueOf(item.getBadcnt()));
+
+        if (mListener != null) {
+            // 현재 위치
+            final int pos = holder.getAdapterPosition();
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(holder.bReadViewState) {
+                        // 리스트 형태로 만든다
+                        holder.myitem_title_ko_literal.setVisibility(View.GONE);
+                        holder.myitem_title_en_literal.setVisibility(View.GONE);
+                        holder.myitem_addinfo_layout.setVisibility(View.GONE);
+                        holder.myitem_social_info_layout.setVisibility(View.GONE);
+                        holder.myitem_button_layout.setVisibility(View.GONE);
+
+
+                        Animation visibleAni = new AlphaAnimation(0, 1);
+                        visibleAni.setDuration(500);
+                        holder.myitem_list_bottom_layout.setAnimation(visibleAni);
+                        holder.myitem_list_bottom_layout.setVisibility(View.VISIBLE);
+
+                        holder.bReadViewState = false;
+                    } else {
+                        // Read 형태로 만든다
+                        Animation visibleAni = new AlphaAnimation(0, 1);
+                        visibleAni.setDuration(500);
+                        holder.myitem_title_ko_literal.setAnimation(visibleAni);
+                        holder.myitem_title_en_literal.setAnimation(visibleAni);
+                        holder.myitem_addinfo_layout.setAnimation(visibleAni);
+                        holder.myitem_social_info_layout.setAnimation(visibleAni);
+                        holder.myitem_button_layout.setAnimation(visibleAni);
+
+                        holder.myitem_title_ko_literal.setVisibility(View.VISIBLE);
+                        holder.myitem_title_en_literal.setVisibility(View.VISIBLE);
+                        holder.myitem_addinfo_layout.setVisibility(View.VISIBLE);
+                        holder.myitem_social_info_layout.setVisibility(View.VISIBLE);
+                        holder.myitem_button_layout.setVisibility(View.VISIBLE);
+
+                        holder.myitem_list_bottom_layout.setVisibility(View.GONE);
+
+                        holder.bReadViewState = true;
+                    }
+
+                    mListener.onItemClicked(pos);
+                }
+            });
+            holder.modify_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mListener.onModifyButtonClicked(pos);
+                }
+            });
+            holder.delete_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mListener.onDeleteButtonClicked(pos);
+                }
+            });
+        }
+
+
+
+
+
+        /*
         // List
         holder.list_title_ko.setText(item.getTitle_ko());
         holder.list_title_en.setText(item.getTitle_en());
@@ -92,6 +200,7 @@ public class MyItemsRecyclerAdapter extends RecyclerView.Adapter<MyItemsRecycler
                 }
             });
         }
+        */
     }
 
 
@@ -102,6 +211,32 @@ public class MyItemsRecyclerAdapter extends RecyclerView.Adapter<MyItemsRecycler
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView myitem_title_ko_literal;
+        TextView myitem_title_ko;
+        TextView myitem_title_en_literal;
+        TextView myitem_title_en;
+
+        LinearLayout myitem_addinfo_layout;
+        TextView myitem_addinfo;
+        TextView myitem_regdate;
+
+        LinearLayout myitem_social_info_layout;
+        TextView item_impression;
+        TextView item_like;
+        TextView item_bad;
+
+        LinearLayout myitem_button_layout;
+        Button modify_btn;
+        Button delete_btn;
+
+        LinearLayout myitem_list_bottom_layout;
+        TextView list_impression;
+        TextView list_like;
+        TextView list_bad;
+
+        Boolean bReadViewState;
+
+        /*
         CardView myitem_card_view;
 
         // ListView 에서 보여질 때
@@ -128,9 +263,37 @@ public class MyItemsRecyclerAdapter extends RecyclerView.Adapter<MyItemsRecycler
         LinearLayout list_layout;
         LinearLayout read_layout;
         Boolean bReadViewState;
+        */
 
         public ViewHolder(View itemView) {
             super(itemView);
+
+            myitem_title_ko_literal = itemView.findViewById(R.id.myitem_title_ko_literal);
+            myitem_title_ko = itemView.findViewById(R.id.myitem_title_ko);
+            myitem_title_en_literal = itemView.findViewById(R.id.myitem_title_en_literal);
+            myitem_title_en = itemView.findViewById(R.id.myitem_title_en);
+
+            myitem_addinfo_layout = itemView.findViewById(R.id.myitem_addinfo_layout);
+            myitem_addinfo = itemView.findViewById(R.id.myitem_addinfo);
+            myitem_regdate = itemView.findViewById(R.id.myitem_regdate);
+
+            myitem_social_info_layout = itemView.findViewById(R.id.myitem_social_info_layout);
+            item_impression = itemView.findViewById(R.id.myitem_card_read_impression);
+            item_like = itemView.findViewById(R.id.myitem_card_read_like);
+            item_bad = itemView.findViewById(R.id.myitem_card_read_bad);
+
+            myitem_button_layout = itemView.findViewById(R.id.myitem_button_layout);
+            modify_btn = itemView.findViewById(R.id.myitemmodify_btn);
+            delete_btn = itemView.findViewById(R.id.myitemdelete_btn);
+
+            myitem_list_bottom_layout = itemView.findViewById(R.id.myitem_list_bottom_layout);
+            list_impression = itemView.findViewById(R.id.myitem_card_list_impression);
+            list_like = itemView.findViewById(R.id.myitem_card_list_like);
+            list_bad = itemView.findViewById(R.id.myitem_card_list_bad);
+
+            bReadViewState = false;
+
+            /*
             myitem_card_view = itemView.findViewById(R.id.myitem_card_view);
             LayoutTransition layoutTransition = myitem_card_view.getLayoutTransition();
             layoutTransition.addTransitionListener(new LayoutTransition.TransitionListener() {
@@ -174,6 +337,7 @@ public class MyItemsRecyclerAdapter extends RecyclerView.Adapter<MyItemsRecycler
             list_layout = itemView.findViewById(R.id.myitem_card_list);
             read_layout = itemView.findViewById(R.id.myitem_card_read);
             bReadViewState = false;
+            */
         }
     }
 
