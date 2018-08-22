@@ -40,6 +40,7 @@ import com.zzingobomi.englishforus.vo.ReplyItem;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Type;
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -220,6 +221,11 @@ public class MyItemManageFragment extends Fragment implements MyItemsRecyclerAda
                         .build();
                 Response response = client.newCall(request).execute();
 
+                if(response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                    Log.d("HttpMyItemsAsyncTask", "UNAUTHORIZED");
+                    return null;
+                }
+
                 // TimeStamp(DB 시간) to Date(Java 시간) 를 위해
                 GsonBuilder builder = new GsonBuilder();
                 builder.registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {
@@ -315,9 +321,14 @@ public class MyItemManageFragment extends Fragment implements MyItemsRecyclerAda
 
                 Request request = new Request.Builder()
                         .url(strUrl)
-                        .post(requestBody)
+                        .put(requestBody)
                         .build();
                 Response response = client.newCall(request).execute();
+
+                if(response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                    Log.d("HttpModifyItemAsyncTask", "UNAUTHORIZED");
+                    return null;
+                }
 
                 // TimeStamp(DB 시간) to Date(Java 시간) 를 위해
                 GsonBuilder builder = new GsonBuilder();
@@ -383,13 +394,14 @@ public class MyItemManageFragment extends Fragment implements MyItemsRecyclerAda
             String strUrl = params[0];
 
             try {
-                Request request = new Request.Builder()
-                        .url(strUrl)
-                        .delete()
-                        .build();
-
-                /* 이게 진짜 코드
                 JsonObject json = new JsonObject();
+                FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                if(firebaseUser != null) {
+                    json.addProperty("regidemail", firebaseUser.getEmail());
+                } else {
+                    json.addProperty("regidemail", "");
+                }
                 json.addProperty("idtoken", FirebaseTokenManager.getInstance().getToken());
                 RequestBody body = RequestBody.create(JSON, json.toString());
 
@@ -397,9 +409,14 @@ public class MyItemManageFragment extends Fragment implements MyItemsRecyclerAda
                         .url(strUrl)
                         .delete(body)
                         .build();
-                        */
 
                 Response response = client.newCall(request).execute();
+
+                if(response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                    Log.d("UNAUTHORIZED", "HttpMyItemDeleteAsyncTask");
+                    return null;
+                }
+
                 result = response.body().string();
             } catch (IOException e) {
                 e.printStackTrace();
