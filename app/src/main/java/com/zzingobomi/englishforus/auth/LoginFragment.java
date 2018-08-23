@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -44,7 +45,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Goo
     private FirebaseAuth mFirebaseAuth;
     private GoogleApiClient mGoogleApiClient;
 
-
+    MaterialDialog waitDialog;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -78,10 +79,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Goo
 
         } else if(v.getId() == R.id.sign_in_email) {
 
-
-            //ProgressBar progressBar = new ProgressBar(this);
-            //progressBar.
-
             // 이메일 로그인 화면으로 전환
             EmailLoginFragment emailLoginFragment = new EmailLoginFragment();
             getActivity().getSupportFragmentManager().beginTransaction()
@@ -104,12 +101,20 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Goo
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        waitDialog = new MaterialDialog.Builder(getActivity())
+                .title(R.string.common_wait_progress_title)
+                .content(R.string.common_wait_progress_content)
+                .progress(true, 0)
+                .cancelable(false)
+                .show();
+
         if(requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             if(result.isSuccess()) {
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
             } else {
+                waitDialog.dismiss();
                 Log.e(TAG, "Google Sign-In failed.");
             }
         }
@@ -123,6 +128,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Goo
             public void onComplete(@NonNull Task<AuthResult> task) {
                 Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
                 if(task.isSuccessful()) {
+                    waitDialog.dismiss();
                     Log.d(TAG, "signInWithCredential");
 
                     FirebaseUser user = mFirebaseAuth.getCurrentUser();
@@ -138,10 +144,11 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Goo
                     Log.d("TOKEN", "Google Refresh Token");
                     FirebaseTokenManager.getInstance().refreshToken(getContext(), user);
 
-                    // TODO: 우선 메인으로.. 후에 바로 문장관리
+                    // TODO: 우선 메인으로.. 후에 바로 문장관리, 뺑글이 후에도 꽤 딜레이가 있네.. startActivity 문제..?
                     startActivity(new Intent(getActivity(), MainActivity.class));
 
                 } else {
+                    waitDialog.dismiss();
                     startActivity(new Intent(getActivity(), MainActivity.class));
                     Toast.makeText(getActivity(), "Authentication failed.", Toast.LENGTH_SHORT).show();
                     Log.w(TAG, "signInWithCredential", task.getException());

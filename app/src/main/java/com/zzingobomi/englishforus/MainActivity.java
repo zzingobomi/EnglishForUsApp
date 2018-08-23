@@ -1,5 +1,6 @@
 package com.zzingobomi.englishforus;
 
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,6 +19,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.ads.AdListener;
@@ -63,6 +66,8 @@ public class MainActivity extends AppCompatActivity
     private int mCurrentStudyCount = 0;        // DB 에 저장.. 아니면 로컬에 저장..? 생각좀 해보자
     private int mMaxStudyAdsCount = 10;
     private InterstitialAd mInterstitialAd;
+
+    MaterialDialog waitDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -170,15 +175,46 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_settings) {
             return true;
         } else if(id == R.id.action_login) {
+            mFirebaseUser = mFirebaseAuth.getCurrentUser();
+            if(mFirebaseUser != null) {
+                // 이메일이 인증되었는지 확인
+                boolean emailVerified = mFirebaseUser.isEmailVerified();
+                if(emailVerified == false) {
+                    mFirebaseAuth.signOut();
+                    Toast.makeText(this, getResources().getString(R.string.common_email_notauth), Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+
+                Toast.makeText(this, getResources().getString(R.string.common_already_login), Toast.LENGTH_SHORT).show();
+                return false;
+            } else {
+                onNavigationItemSelected(mNavigationView.getMenu().getItem(2));
+                mNavigationView.getMenu().getItem(0).setChecked(true);
+            }
+
             return true;
         } else if(id == R.id.action_logout) {
-            mFirebaseAuth.signOut();
-            if(mGoogleApiClient.isConnected()) {
-                Auth.GoogleSignInApi.signOut(mGoogleApiClient);
-            }
-            mUsername = "";
-            setUserInfoNavHeader(getString(R.string.common_anonymous_name), null);
-            goHome();
+            new MaterialDialog.Builder(this)
+                    .title(R.string.common_logout_title)
+                    .content(R.string.common_logout_content)
+                    .positiveText(R.string.common_agree)
+                    .negativeText(R.string.common_disagree)
+                    .positiveColor(Color.BLACK)
+                    .negativeColor(Color.BLACK)
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            mFirebaseAuth.signOut();
+                            if(mGoogleApiClient.isConnected()) {
+                                Auth.GoogleSignInApi.signOut(mGoogleApiClient);
+                            }
+                            mUsername = "";
+                            setUserInfoNavHeader(getString(R.string.common_anonymous_name), null);
+                            goHome();
+                        }
+                    })
+                    .show();
+
             return true;
         }
 
@@ -212,7 +248,7 @@ public class MainActivity extends AppCompatActivity
                 boolean emailVerified = mFirebaseUser.isEmailVerified();
                 if(emailVerified == false) {
                     mFirebaseAuth.signOut();
-                    Toast.makeText(this, "아직 이메일이 인증되지 않았습니다. 이메일을 인증해 주십시오.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getResources().getString(R.string.common_email_notauth), Toast.LENGTH_SHORT).show();
                     return false;
                 }
 

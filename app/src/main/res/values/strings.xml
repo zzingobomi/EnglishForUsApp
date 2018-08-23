@@ -10,6 +10,10 @@
     <string name="action_login">Login</string>
     <string name="action_logout">LogOut</string>
     <string name="common_anonymous_name">Anonymous</string>
+    <string name="common_already_login">이미 로그인 되어있습니다.</string>
+    <string name="common_email_notauth">아직 이메일이 인증되지 않았습니다. 이메일을 인증해 주십시오.</string>
+    <string name="common_logout_title">로그아웃</string>
+    <string name="common_logout_content">정말 로그아웃 하시겠습니까?</string>
     <string name="common_need_login">로그인이 필요한 기능입니다.</string>
     <string name="common_wait_progress_title">잠시만 기다려 주십시오</string>
     <string name="common_wait_progress_content">Please wait....</string>
