@@ -9,6 +9,13 @@
     <string name="action_settings">Settings</string>
     <string name="action_login">Login</string>
     <string name="action_logout">LogOut</string>
+
+    <string name="common_navmenu_home">홈화면</string>
+    <string name="common_navmenu_study">공부 시작</string>
+    <string name="common_navmenu_manage">내 문장 관리</string>
+    <string name="common_navmenu_ranking">순위표</string>
+    <string name="common_navmenu_bymade">만든 사람</string>
+
     <string name="common_anonymous_name">Anonymous</string>
     <string name="common_already_login">이미 로그인 되어있습니다.</string>
     <string name="common_email_notauth">아직 이메일이 인증되지 않았습니다. 이메일을 인증해 주십시오.</string>
@@ -18,6 +25,7 @@
     <string name="common_wait_progress_title">잠시만 기다려 주십시오</string>
     <string name="common_wait_progress_content">Please wait....</string>
 
+    <string name="common_impression_text">노출수</string>
     <string name="common_likebtn_text">좋아요</string>
     <string name="common_likecancelbtn_text">좋아요 취소</string>
     <string name="common_badbtn_text">신고하기</string>
@@ -61,6 +69,14 @@
     <string name="study_reply_delete_title">댓글 삭제하기</string>
     <string name="study_reply_delete_content">댓글을 정말 삭제하시겠습니까?</string>
 
+    <string name="study_reply_regdisplayname">작성자</string>
+    <string name="study_reply_regdate">등록날짜</string>
+    <string name="study_reply_content">내용</string>
+
+    <string name="study_reply_create_content">댓글을 입력하세요</string>
+    <string name="study_reply_create_btn">등록하기</string>
+    <string name="study_reply_create_notlogin">로그인을 하셔야 댓글달기가 가능합니다</string>
+
     <!-- MyItemManage -->
     <string name="myitem_additem_kor_literal">한글 문장</string>
     <string name="myitem_additem_eng_literal">영어 문장</string>
@@ -68,8 +84,16 @@
     <string name="myitem_additem_button_text">추가하기</string>
     <string name="myitem_additem_done_text">완료되었습니다.</string>
 
-    <!-- Ranking -->
+    <string name="myitem_manage_add">문장 추가하기</string>
 
+    <string name="myitem_read_kor_literal">한국어</string>
+    <string name="myitem_read_eng_literal">영어</string>
+    <string name="myitem_read_addinfo_literal">부연 설명</string>
+
+    <!-- Ranking -->
+    <string name="rank_impression_title">노출수 순위</string>
+    <string name="rank_like_title">좋아요 순위</string>
+    <string name="rank_manyitem_title">문장개수 순위</string>
 
 
 

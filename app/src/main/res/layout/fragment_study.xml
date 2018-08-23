@@ -34,7 +34,7 @@
                 android:layout_margin="8dp"
                 android:background="@drawable/speechbubbleinvert"
                 android:visibility="invisible"
-                android:text="잠시만 기다려 주십시오"/>
+                android:text="@string/common_wait_progress_title"/>
         </LinearLayout>
 
         <LinearLayout
@@ -52,7 +52,7 @@
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:layout_margin="8dp"
-                    android:layout_toLeftOf="@+id/engperson_image"
+                    android:layout_toStartOf="@+id/engperson_image"
                     android:background="@drawable/speechbubble"
                     android:visibility="invisible"
                     android:text=""/>
@@ -112,7 +112,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     style="@style/Base.Widget.AppCompat.Button.Borderless"
-                    android:drawableLeft="@drawable/ic_study_comment"
+                    android:drawableStart="@drawable/ic_study_comment"
                     android:layout_gravity="center"
                     android:text="@string/study_replyshowbtn_text"/>
                 <View
@@ -127,7 +127,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     style="@style/Base.Widget.AppCompat.Button.Borderless"
-                    android:drawableLeft="@drawable/ic_study_like"
+                    android:drawableStart="@drawable/ic_study_like"
                     android:layout_gravity="center"
                     android:text="@string/common_likebtn_text"/>
                 <View
@@ -142,7 +142,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     style="@style/Base.Widget.AppCompat.Button.Borderless"
-                    android:drawableLeft="@drawable/ic_study_bad"
+                    android:drawableStart="@drawable/ic_study_bad"
                     android:layout_gravity="center"
                     android:text="@string/common_badbtn_text"/>
             </LinearLayout>

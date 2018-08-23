@@ -28,7 +28,7 @@
             android:textSize="12sp"
             android:background="@color/light_grey"
             android:visibility="gone"
-            android:text="한국어"/>
+            android:text="@string/myitem_read_kor_literal"/>
         <TextView
             android:id="@+id/myitem_title_ko"
             android:layout_width="match_parent"
@@ -39,7 +39,7 @@
             android:paddingEnd="4dp"
             android:textSize="20sp"
             android:visibility="visible"
-            android:text="한국어문장"/>
+            android:text=""/>
         <EditText
             android:id="@+id/myitem_title_ko_edit"
             android:layout_width="match_parent"
@@ -50,7 +50,7 @@
             android:paddingEnd="4dp"
             android:textSize="20sp"
             android:visibility="gone"
-            android:text="한국어문장"/>
+            android:text=""/>
         <TextView
             android:id="@+id/myitem_title_en_literal"
             android:layout_width="wrap_content"
@@ -62,7 +62,7 @@
             android:textSize="12sp"
             android:background="@color/light_grey"
             android:visibility="gone"
-            android:text="영어"/>
+            android:text="@string/myitem_read_eng_literal"/>
         <TextView
             android:id="@+id/myitem_title_en"
             android:layout_width="match_parent"
@@ -73,7 +73,7 @@
             android:paddingEnd="4dp"
             android:textSize="20sp"
             android:visibility="visible"
-            android:text="영어문장"/>
+            android:text=""/>
         <EditText
             android:id="@+id/myitem_title_en_edit"
             android:layout_width="match_parent"
@@ -84,7 +84,7 @@
             android:paddingEnd="4dp"
             android:textSize="20sp"
             android:visibility="gone"
-            android:text="영어문장"/>
+            android:text=""/>
         <LinearLayout
             android:id="@+id/myitem_addinfo_layout"
             android:layout_width="match_parent"
@@ -100,7 +100,7 @@
                 android:layout_marginEnd="4dp"
                 android:textSize="12sp"
                 android:background="@color/light_grey"
-                android:text="부연 설명"/>
+                android:text="@string/myitem_read_addinfo_literal"/>
             <TextView
                 android:id="@+id/myitem_addinfo"
                 android:layout_width="match_parent"
@@ -112,7 +112,7 @@
                 android:textSize="12sp"
                 android:minLines="3"
                 android:visibility="visible"
-                android:text="부연 설명 내용"/>
+                android:text=""/>
             <EditText
                 android:id="@+id/myitem_addinfo_edit"
                 android:layout_width="match_parent"
@@ -124,7 +124,7 @@
                 android:textSize="12sp"
                 android:minLines="3"
                 android:visibility="gone"
-                android:text="부연 설명 내용"/>
+                android:text=""/>
             <TextView
                 android:id="@+id/myitem_regdate"
                 android:layout_width="wrap_content"
@@ -132,7 +132,7 @@
                 android:layout_gravity="end"
                 android:paddingEnd="8dp"
                 android:drawableStart="@drawable/ic_reply_regdate"
-                android:text="2018-08-21"/>
+                android:text=""/>
         </LinearLayout>
 
         <LinearLayout
@@ -156,12 +156,12 @@
                     android:textSize="24sp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:text="10"/>
+                    android:text=""/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="노출수"/>
+                    android:text="@string/common_impression_text"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -176,12 +176,12 @@
                     android:textSize="24sp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:text="5"/>
+                    android:text=""/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="좋아요"/>
+                    android:text="@string/common_likebtn_text"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -196,12 +196,12 @@
                     android:textSize="24sp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:text="1"/>
+                    android:text=""/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="신고수"/>
+                    android:text="@string/common_badbtn_text"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -225,7 +225,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     style="@style/Base.Widget.AppCompat.Button.Borderless"
-                    android:drawableLeft="@drawable/ic_study_comment"
+                    android:drawableStart="@drawable/ic_study_comment"
                     android:layout_gravity="center"
                     android:text="@string/common_modify_text"/>
                 <View
@@ -261,7 +261,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     style="@style/Base.Widget.AppCompat.Button.Borderless"
-                    android:drawableLeft="@drawable/ic_study_like"
+                    android:drawableStart="@drawable/ic_study_like"
                     android:layout_gravity="center"
                     android:text="@string/common_delete_text"/>
 
@@ -288,7 +288,7 @@
                     android:drawableStart="@drawable/ic_myitem_impression"
                     android:layout_toStartOf="@id/myitem_card_list_like"
                     android:layout_marginEnd="8dp"
-                    android:text="10" />
+                    android:text="" />
                 <TextView
                     android:id="@+id/myitem_card_list_like"
                     android:layout_width="wrap_content"
@@ -296,7 +296,7 @@
                     android:drawableStart="@drawable/ic_myitem_like"
                     android:layout_toStartOf="@id/myitem_card_list_bad"
                     android:layout_marginEnd="8dp"
-                    android:text="10" />
+                    android:text="" />
                 <TextView
                     android:id="@+id/myitem_card_list_bad"
                     android:layout_width="wrap_content"
@@ -304,7 +304,7 @@
                     android:drawableStart="@drawable/ic_myitem_bad"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="8dp"
-                    android:text="10" />
+                    android:text="" />
             </RelativeLayout>
 
         </LinearLayout>

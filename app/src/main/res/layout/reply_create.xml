@@ -17,14 +17,14 @@
             android:layout_width="0dp"
             android:layout_weight="0.7"
             android:layout_height="wrap_content"
-            android:hint="댓글을 입력하세요"/>
+            android:hint="@string/study_reply_create_content"/>
         <TextView
             android:id="@+id/reply_create_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.3"
             android:gravity="center"
-            android:text="등록하기"/>
+            android:text="@string/study_reply_create_btn"/>
     </LinearLayout>
 
     <LinearLayout
@@ -36,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="로그인을 하셔야 댓글달기가 가능합니다"/>
+            android:text="@string/study_reply_create_notlogin"/>
     </LinearLayout>
 
 </LinearLayout>

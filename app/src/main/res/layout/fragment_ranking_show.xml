@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="노출수 순위" />
+        android:text="@string/rank_impression_title" />
     <TextView
         android:id="@+id/ranking_impression_1"
         android:layout_width="match_parent"
@@ -31,7 +31,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="좋아요 순위" />
+        android:text="@string/rank_like_title" />
     <TextView
         android:id="@+id/ranking_like_1"
         android:layout_width="match_parent"
@@ -52,7 +52,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="문장개수 순위" />
+        android:text="@string/rank_manyitem_title" />
     <TextView
         android:id="@+id/ranking_manyitem_1"
         android:layout_width="match_parent"

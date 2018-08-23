@@ -51,7 +51,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/gray"
                     android:textSize="14sp"
-                    android:text="작성자"/>
+                    android:text="@string/study_reply_regdisplayname"/>
                 <TextView
                     android:id="@+id/reply_regdate"
                     android:layout_width="match_parent"
@@ -60,7 +60,7 @@
                     android:drawablePadding="4dp"
                     android:textColor="@color/gray"
                     android:textSize="14sp"
-                    android:text="등록날짜"/>
+                    android:text="@string/study_reply_regdate"/>
             </LinearLayout>
 
             <TextView
@@ -72,7 +72,7 @@
                 android:textSize="14sp"
                 android:layout_marginTop="8dp"
                 android:visibility="visible"
-                android:text="내용"/>
+                android:text="@string/study_reply_content"/>
             <EditText
                 android:id="@+id/reply_contents_edit"
                 android:layout_width="wrap_content"
