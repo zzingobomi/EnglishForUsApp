@@ -80,7 +80,6 @@ public class MyItemManageFragment extends Fragment implements MyItemsRecyclerAda
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.d(TAG, "MyItemManageFragment onCreateView");
         final MyItemManageFragment fragment = this;
 
         mAuth = FirebaseAuth.getInstance();
