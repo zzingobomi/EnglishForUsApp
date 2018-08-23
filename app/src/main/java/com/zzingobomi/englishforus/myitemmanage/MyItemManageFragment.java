@@ -143,6 +143,7 @@ public class MyItemManageFragment extends Fragment implements MyItemsRecyclerAda
 
     @Override
     public void onModifyButtonClicked(int position, String titleKor, String titleEng, String addInfo) {
+        mCurSelectPosition = position;
         Item modifyItem = mAdapter.getItem(position);
         new HttpModifyItemAsyncTask(this).execute("http://englishforus.zzingobomi.synology.me/itemapi/myitem/" + modifyItem.getIdx()
                 ,titleKor
@@ -357,7 +358,10 @@ public class MyItemManageFragment extends Fragment implements MyItemsRecyclerAda
                 final MyItemManageFragment fragment = fragmentWeakReference.get();
                 if(fragment == null || fragment.isDetached()) return;
 
-                // Adapter 변경해주고... 리스트나 Read 보여주는걸로 마무리..
+                if(fragment.mCurSelectPosition != -1) {
+                    fragment.mAdapter.modifyItem(fragment.mCurSelectPosition, resultItem);
+                    fragment.mCurSelectPosition = -1;
+                }
             }
         }
     }

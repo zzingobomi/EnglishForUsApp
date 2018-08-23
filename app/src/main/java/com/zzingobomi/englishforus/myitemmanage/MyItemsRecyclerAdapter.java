@@ -250,15 +250,20 @@ public class MyItemsRecyclerAdapter extends RecyclerView.Adapter<MyItemsRecycler
         void onDeleteButtonClicked(int position);
     }
 
-    public void removeItem(int position) {
-        mDataList.remove(position);
-        notifyItemRemoved(position);
-        notifyItemRangeChanged(position, mDataList.size());
-    }
-
     public void addItem(int position, Item item) {
         mDataList.add(position, item);
         notifyItemInserted(position);
+        notifyItemRangeChanged(position, mDataList.size());
+    }
+
+    public void modifyItem(int position, Item item) {
+        mDataList.set(position, item);
+        notifyDataSetChanged();
+    }
+
+    public void removeItem(int position) {
+        mDataList.remove(position);
+        notifyItemRemoved(position);
         notifyItemRangeChanged(position, mDataList.size());
     }
 }
