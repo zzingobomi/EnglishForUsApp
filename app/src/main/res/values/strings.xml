@@ -34,12 +34,39 @@
     <!-- Home -->
     <string name="home_main_text">안녕하세요. ZZINGOBOMI 입니다.\n공부하기 기능은 바로 이용하실 수 있고\n문장 추가와 댓글은 회원가입을 이용해 주세요</string>
 
+    <!-- Auth -->
+    <string name="auth_email_create_title">Email 회원가입</string>
+    <string name="auth_email_create_name">이름</string>
+    <string name="auth_email_create_email">E-mail</string>
+    <string name="auth_email_create_password">비밀번호</string>
+    <string name="auth_email_create_photo">Photo Url</string>
+    <string name="auth_email_create_regist">회원 가입</string>
+    <string name="auth_email_create_thank">감사합니다.\n마지막으로 인증메일 받기를 누르고 이메일에서 인증을 완료해 주십시오.</string>
+    <string name="auth_email_create_authmail">인증메일 받기</string>
+    <string name="auth_email_create_login">로그인 하기</string>
+
+    <string name="auth_email_login_title">Email 로그인</string>
+    <string name="auth_email_login_email">E-mail</string>
+    <string name="auth_email_login_password">비밀번호</string>
+    <string name="auth_email_login_login">로그인</string>
+
+    <string name="auth_login_title">로그인</string>
+    <string name="auth_login_google">구글 로그인</string>
+    <string name="auth_login_email">이메일 로그인</string>
+    <string name="auth_login_create_email">이메일로 회원 가입</string>
+
+
     <!-- Study -->
     <string name="study_replyshowbtn_text">댓글 보기</string>
     <string name="study_reply_delete_title">댓글 삭제하기</string>
     <string name="study_reply_delete_content">댓글을 정말 삭제하시겠습니까?</string>
 
     <!-- MyItemManage -->
+    <string name="myitem_additem_kor_literal">한글 문장</string>
+    <string name="myitem_additem_eng_literal">영어 문장</string>
+    <string name="myitem_additem_addinfo_literal">부연 설명</string>
+    <string name="myitem_additem_button_text">추가하기</string>
+    <string name="myitem_additem_done_text">완료되었습니다.</string>
 
     <!-- Ranking -->
 

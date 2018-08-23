@@ -28,7 +28,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Email 회원가입"
+                    android:text="@string/auth_email_create_title"
                     android:textSize="24sp"
                     android:padding="8dp"
                     android:textColor="@color/white"
@@ -47,7 +47,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    android:text="이름"/>
+                    android:text="@string/auth_email_create_name"/>
                 <EditText
                     android:id="@+id/email_create_name_field"
                     android:layout_width="match_parent"
@@ -59,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    android:text="E-mail"/>
+                    android:text="@string/auth_email_create_email"/>
                 <EditText
                     android:id="@+id/email_create_email_field"
                     android:layout_width="match_parent"
@@ -71,7 +71,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    android:text="비밀번호"/>
+                    android:text="@string/auth_email_create_password"/>
                 <EditText
                     android:id="@+id/email_create_password_field"
                     android:layout_width="match_parent"
@@ -84,7 +84,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    android:text="Photo Url"/>
+                    android:text="@string/auth_email_create_photo"/>
                 <EditText
                     android:id="@+id/email_create_photourl_field"
                     android:layout_width="match_parent"
@@ -96,7 +96,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/Base.Widget.AppCompat.Button.Borderless"
-                    android:text="회원 가입"/>
+                    android:text="@string/auth_email_create_regist"/>
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/email_create_verification_layout"
@@ -108,7 +108,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
-                    android:text="감사합니다.\n마지막으로 인증메일 받기를 누르고 이메일에서 인증을 완료해 주십시오."/>
+                    android:text="@string/auth_email_create_thank"/>
                 <View
                     android:background="@color/black"
                     android:layout_width="match_parent"
@@ -118,13 +118,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/Base.Widget.AppCompat.Button.Borderless"
-                    android:text="인증메일 받기"/>
+                    android:text="@string/auth_email_create_authmail"/>
                 <Button
                     android:id="@+id/email_create_verification_end_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/Base.Widget.AppCompat.Button.Borderless"
-                    android:text="로그인 하기"
+                    android:text="@string/auth_email_create_login"
                     android:visibility="gone"/>
             </LinearLayout>
 

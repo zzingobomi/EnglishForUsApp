@@ -15,7 +15,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="한글 문장" />
+            android:text="@string/myitem_additem_kor_literal" />
         <EditText
             android:id="@+id/add_title_ko"
             android:layout_width="match_parent"
@@ -23,7 +23,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="영어 문장" />
+            android:text="@string/myitem_additem_eng_literal" />
         <EditText
             android:id="@+id/add_title_en"
             android:layout_width="match_parent"
@@ -31,7 +31,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="부연 설명" />
+            android:text="@string/myitem_additem_addinfo_literal" />
         <EditText
             android:id="@+id/add_addinfo"
             android:layout_width="match_parent"
@@ -41,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/Base.Widget.AppCompat.Button.Borderless"
-            android:text="추가하기" />
+            android:text="@string/myitem_additem_button_text" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/create_result_layout"
@@ -54,8 +54,8 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:textStyle="bold"
-            android:textSize="20dp"
-            android:text="완료되었습니다." />
+            android:textSize="20sp"
+            android:text="@string/myitem_additem_done_text" />
     </LinearLayout>
 
 </LinearLayout>
