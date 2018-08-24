@@ -65,7 +65,6 @@ public class MyItemManageFragment extends Fragment implements MyItemsRecyclerAda
 
     private Button mAddItemButton;
 
-    //private List<Item> mCurItems;
     private RecyclerView mRecyclerView;
     private MyItemsRecyclerAdapter mAdapter;
 
@@ -253,12 +252,6 @@ public class MyItemManageFragment extends Fragment implements MyItemsRecyclerAda
 
                 final MyItemManageFragment fragment = fragmentWeakReference.get();
                 if(fragment == null || fragment.isDetached()) return;
-
-                //fragment.mCurItems = items;
-
-                //for(int i = 0; i < items.size(); i++) {
-                    //Log.d(TAG, "RegDate : " + items.get(i).getRegdate().toString());
-                //}
 
                 // 어댑터 설정
                 fragment.mAdapter = new MyItemsRecyclerAdapter(items, fragment.getContext());
