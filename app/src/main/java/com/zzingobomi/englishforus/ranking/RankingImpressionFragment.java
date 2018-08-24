@@ -77,7 +77,7 @@ public class RankingImpressionFragment extends Fragment {
         DividerItemDecoration decoration = new DividerItemDecoration(this.getContext(), layoutManager.getOrientation());
         mRecyclerView.addItemDecoration(decoration);
 
-        new HttpRankAsyncTask(this).execute("http://englishforus.zzingobomi.synology.me/rankingapi/rank", "impressioncnt", "3");
+        new HttpRankAsyncTask(this).execute("http://englishforus.zzingobomi.synology.me/rankingapi/rank", "impressioncnt", "5");
 
         return view;
     }

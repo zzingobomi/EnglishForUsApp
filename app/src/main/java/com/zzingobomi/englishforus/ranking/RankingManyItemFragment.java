@@ -76,7 +76,7 @@ public class RankingManyItemFragment extends Fragment {
         DividerItemDecoration decoration = new DividerItemDecoration(this.getContext(), layoutManager.getOrientation());
         mRecyclerView.addItemDecoration(decoration);
 
-        new HttpRankManyItemsAsyncTask(this).execute("http://englishforus.zzingobomi.synology.me/rankingapi/topregistuser", "3");
+        new HttpRankManyItemsAsyncTask(this).execute("http://englishforus.zzingobomi.synology.me/rankingapi/topregistuser", "5");
 
         return view;
     }
@@ -152,7 +152,7 @@ public class RankingManyItemFragment extends Fragment {
                 final RankingManyItemFragment fragment = fragmentWeakReference.get();
                 if(fragment == null || fragment.isDetached()) return;
 
-                fragment.mAdapter = new RankingManyItemRecyclerAdapter(manyItemRankResult);
+                fragment.mAdapter = new RankingManyItemRecyclerAdapter(manyItemRankResult, fragment);
                 //fragment.mAdapter.setOnClickListener(fragment);
                 fragment.mRecyclerView.setAdapter(fragment.mAdapter);
             }
