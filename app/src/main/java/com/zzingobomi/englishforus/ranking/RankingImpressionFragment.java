@@ -155,7 +155,7 @@ public class RankingImpressionFragment extends Fragment {
                 final RankingImpressionFragment fragment = fragmentWeakReference.get();
                 if(fragment == null || fragment.isDetached()) return;
 
-                fragment.mAdapter = new RankingImpressionRecyclerAdapter(items);
+                fragment.mAdapter = new RankingImpressionRecyclerAdapter(items, fragment);
                 //fragment.mAdapter.setOnClickListener(fragment);
                 fragment.mRecyclerView.setAdapter(fragment.mAdapter);
             }

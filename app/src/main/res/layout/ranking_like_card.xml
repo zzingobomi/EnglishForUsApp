@@ -1,24 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_margin="8dp"
+    android:orientation="horizontal">
 
+    <ImageView
+        android:id="@+id/ranking_like_card_medal_image"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_gravity="top"
+        android:visibility="visible"
+        app:srcCompat="@mipmap/ic_launcher_round" />
     <TextView
-        android:id="@+id/ranking_like_card_kor"
+        android:id="@+id/ranking_like_card_medal_text"
+        android:layout_width="50sp"
+        android:layout_height="50sp"
+        android:layout_marginStart="8dp"
+        android:layout_gravity="center"
+        android:visibility="visible"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:text=""/>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text=""/>
-    <TextView
-        android:id="@+id/ranking_like_card_eng"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text=""/>
-    <TextView
-        android:id="@+id/ranking_like_card_like"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text=""/>
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/ranking_like_card_kor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textSize="20sp"
+            android:text=""/>
+        <TextView
+            android:id="@+id/ranking_like_card_eng"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textSize="20sp"
+            android:text=""/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/ranking_like_card_like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_myitem_like"
+                android:drawablePadding="4dp"
+                android:layout_marginStart="8dp"
+                android:layout_alignParentStart="true"
+                android:text=""/>
+            <TextView
+                android:id="@+id/ranking_like_card_displayname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_alignParentEnd="true"
+                android:text=""/>
+        </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>

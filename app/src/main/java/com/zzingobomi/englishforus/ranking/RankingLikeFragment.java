@@ -155,7 +155,7 @@ public class RankingLikeFragment extends Fragment {
                 final RankingLikeFragment fragment = fragmentWeakReference.get();
                 if(fragment == null || fragment.isDetached()) return;
 
-                fragment.mAdapter = new RankingLikeRecyclerAdapter(items);
+                fragment.mAdapter = new RankingLikeRecyclerAdapter(items, fragment);
                 //fragment.mAdapter.setOnClickListener(fragment);
                 fragment.mRecyclerView.setAdapter(fragment.mAdapter);
             }
