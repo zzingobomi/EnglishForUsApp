@@ -3,7 +3,9 @@ package com.zzingobomi.englishforus.ranking;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,16 +54,9 @@ public class RankingShowFragment extends Fragment {
     private static final String TAG = MainActivity.class.getSimpleName();
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
-    // 노출수 순위
-    TextView[] impressionRank = new TextView[3];
+    ViewPager mRankingViewPager;
+    TabLayout mRankingTabLayout;
 
-    // 좋아요 순위
-    TextView[] likeRank = new TextView[3];
-
-    // 문장개수 순위
-    TextView manyitem_1;
-    TextView manyitem_2;
-    TextView manyitem_3;
 
     ///
     /// Column 이름으로 순위 결과 받아오는 Wrapper 클래스
@@ -91,21 +86,18 @@ public class RankingShowFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_ranking_show, container, false);
 
-        impressionRank[0] = view.findViewById(R.id.ranking_impression_1);
-        impressionRank[1] = view.findViewById(R.id.ranking_impression_2);
-        impressionRank[2] = view.findViewById(R.id.ranking_impression_3);
+        mRankingViewPager = view.findViewById(R.id.ranking_pager);
+        RankingPagerAdapter adapter = new RankingPagerAdapter(getActivity().getSupportFragmentManager(), getContext());
+        mRankingViewPager.setAdapter(adapter);
 
-        likeRank[0] = view.findViewById(R.id.ranking_like_1);
-        likeRank[1] = view.findViewById(R.id.ranking_like_2);
-        likeRank[2] = view.findViewById(R.id.ranking_like_3);
+        mRankingTabLayout = view.findViewById(R.id.ranking_tab);
+        mRankingTabLayout.setupWithViewPager(mRankingViewPager);
 
-        manyitem_1 = view.findViewById(R.id.ranking_manyitem_1);
-        manyitem_2 = view.findViewById(R.id.ranking_manyitem_2);
-        manyitem_3 = view.findViewById(R.id.ranking_manyitem_3);
 
-        new HttpRankAsyncTask(this).execute("http://englishforus.zzingobomi.synology.me/rankingapi/rank", "impressioncnt", "3");
-        new HttpRankAsyncTask(this).execute("http://englishforus.zzingobomi.synology.me/rankingapi/rank", "likecnt", "3");
-        new HttpRankManyItemsAsyncTask(this).execute("http://englishforus.zzingobomi.synology.me/rankingapi/topregistuser", "3");
+
+        //new HttpRankAsyncTask(this).execute("http://englishforus.zzingobomi.synology.me/rankingapi/rank", "impressioncnt", "3");
+        //new HttpRankAsyncTask(this).execute("http://englishforus.zzingobomi.synology.me/rankingapi/rank", "likecnt", "3");
+        //new HttpRankManyItemsAsyncTask(this).execute("http://englishforus.zzingobomi.synology.me/rankingapi/topregistuser", "3");
 
         return view;
     }
@@ -185,6 +177,7 @@ public class RankingShowFragment extends Fragment {
                 final RankingShowFragment fragment = fragmentWeakReference.get();
                 if(fragment == null || fragment.isDetached()) return;
 
+                /*
                 if(columnRankResult.columnName.equals("impressioncnt")) {
                     for(int i = 0; i < 3; i++) {
                         String resultText = columnRankResult.resultItems.get(i).getTitle_ko() + " / " +
@@ -200,6 +193,7 @@ public class RankingShowFragment extends Fragment {
                         fragment.likeRank[i].setText(resultText);
                     }
                 }
+                */
             }
         }
     }

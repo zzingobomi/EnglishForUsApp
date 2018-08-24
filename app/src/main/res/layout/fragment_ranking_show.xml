@@ -2,72 +2,22 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ranking.RankingShowFragment">
 
-    <TextView
+    <android.support.design.widget.TabLayout
+        android:id="@+id/ranking_tab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/rank_impression_title" />
-    <TextView
-        android:id="@+id/ranking_impression_1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/ranking_impression_2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/ranking_impression_3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <View
-        android:background="@color/light_grey"
-        android:layout_width="match_parent"
-        android:layout_height="2px"/>
+        app:tabSelectedTextColor="#0000ff"
+        app:tabTextColor="#ff0000" />
 
-    <TextView
+    <android.support.v4.view.ViewPager
+        android:id="@+id/ranking_pager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/rank_like_title" />
-    <TextView
-        android:id="@+id/ranking_like_1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/ranking_like_2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/ranking_like_3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <View
-        android:background="@color/light_grey"
-        android:layout_width="match_parent"
-        android:layout_height="2px"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/rank_manyitem_title" />
-    <TextView
-        android:id="@+id/ranking_manyitem_1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/ranking_manyitem_2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/ranking_manyitem_3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <View
-        android:background="@color/light_grey"
-        android:layout_width="match_parent"
-        android:layout_height="2px"/>
+        android:layout_height="match_parent" />
 
 </LinearLayout>

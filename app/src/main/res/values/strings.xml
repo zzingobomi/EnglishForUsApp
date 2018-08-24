@@ -95,6 +95,8 @@
     <string name="rank_like_title">좋아요 순위</string>
     <string name="rank_manyitem_title">문장개수 순위</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>
