@@ -4,12 +4,13 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.zzingobomi.englishforus.R;
 
 import java.util.ArrayList;
 
-public class RankingPagerAdapter extends FragmentPagerAdapter {
+public class RankingPagerAdapter extends FragmentStatePagerAdapter {
 
     private Context mContext;
     private ArrayList<Fragment> mData;

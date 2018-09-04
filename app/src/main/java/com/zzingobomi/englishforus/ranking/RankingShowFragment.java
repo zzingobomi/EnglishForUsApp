@@ -56,6 +56,7 @@ public class RankingShowFragment extends Fragment {
 
     ViewPager mRankingViewPager;
     TabLayout mRankingTabLayout;
+    RankingPagerAdapter mRankingPagerAdapter;
 
 
     public RankingShowFragment() {
@@ -69,8 +70,8 @@ public class RankingShowFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_ranking_show, container, false);
 
         mRankingViewPager = view.findViewById(R.id.ranking_pager);
-        RankingPagerAdapter adapter = new RankingPagerAdapter(getActivity().getSupportFragmentManager(), getContext());
-        mRankingViewPager.setAdapter(adapter);
+        mRankingPagerAdapter = new RankingPagerAdapter(getActivity().getSupportFragmentManager(), getContext());
+        mRankingViewPager.setAdapter(mRankingPagerAdapter);
 
         mRankingTabLayout = view.findViewById(R.id.ranking_tab);
         mRankingTabLayout.setupWithViewPager(mRankingViewPager);
