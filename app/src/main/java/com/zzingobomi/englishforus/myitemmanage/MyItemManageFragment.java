@@ -206,6 +206,7 @@ public class MyItemManageFragment extends Fragment implements MyItemsRecyclerAda
             String strUrl = params[0];
             try {
                 JsonObject json = new JsonObject();
+                json.addProperty("idtoken", FirebaseTokenManager.getInstance().getToken());
                 FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                 if(firebaseUser != null) {

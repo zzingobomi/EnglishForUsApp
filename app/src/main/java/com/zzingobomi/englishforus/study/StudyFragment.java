@@ -1224,6 +1224,7 @@ public class StudyFragment extends Fragment {
 
             try {
                 JsonObject jsonObject = new JsonObject();
+                jsonObject.addProperty("idtoken", FirebaseTokenManager.getInstance().getToken());
                 jsonObject.addProperty("itemidx", String.valueOf(itemIdx));
                 jsonObject.addProperty("replytext", replyText);
                 jsonObject.addProperty("regidemail", regidEmail);
@@ -1236,6 +1237,12 @@ public class StudyFragment extends Fragment {
                         .post(body)
                         .build();
                 Response response = client.newCall(request).execute();
+
+                if(response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                    Log.d("UNAUTHORIZED", "HttpReplyCreateAsyncTask");
+                    return null;
+                }
+
                 result = response.body().string();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -1293,9 +1300,18 @@ public class StudyFragment extends Fragment {
 
             int itemIdx = fragment.itemIdx;
             String replyText = params[1];
+            String regidEmail = "";
+
+            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+            FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+            if(firebaseUser != null) {
+                regidEmail = firebaseUser.getEmail();
+            }
 
             try {
                 JsonObject jsonObject = new JsonObject();
+                jsonObject.addProperty("idtoken", FirebaseTokenManager.getInstance().getToken());
+                jsonObject.addProperty("regidemail", regidEmail);
                 jsonObject.addProperty("replytext", replyText);
 
                 RequestBody body = RequestBody.create(JSON, jsonObject.toString());
@@ -1304,6 +1320,12 @@ public class StudyFragment extends Fragment {
                         .put(body)
                         .build();
                 Response response = client.newCall(request).execute();
+
+                if(response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                    Log.d("UNAUTHORIZED", "HttpReplyModifyAsyncTask");
+                    return null;
+                }
+
                 result = response.body().string();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -1358,13 +1380,31 @@ public class StudyFragment extends Fragment {
 
             String result = null;
             String strUrl = params[0];
+            String regidEmail = "";
+
+            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+            FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+            if(firebaseUser != null) {
+                regidEmail = firebaseUser.getEmail();
+            }
 
             try {
+                JsonObject jsonObject = new JsonObject();
+                jsonObject.addProperty("idtoken", FirebaseTokenManager.getInstance().getToken());
+                jsonObject.addProperty("regidemail", regidEmail);
+
+                RequestBody body = RequestBody.create(JSON, jsonObject.toString());
                 Request request = new Request.Builder()
                         .url(strUrl)
-                        .delete()
+                        .delete(body)
                         .build();
                 Response response = client.newCall(request).execute();
+
+                if(response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                    Log.d("UNAUTHORIZED", "HttpReplyDeleteAsyncTask");
+                    return null;
+                }
+
                 result = response.body().string();
             } catch (IOException e) {
                 e.printStackTrace();

@@ -37,6 +37,7 @@ import com.zzingobomi.englishforus.R;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Type;
+import java.net.HttpURLConnection;
 import java.util.Date;
 
 import okhttp3.MediaType;
@@ -221,6 +222,11 @@ public class AddItemFragment extends Fragment {
                         .post(requestBody)
                         .build();
                 Response response = client.newCall(request).execute();
+
+                if(response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                    Log.d("HttpAddItemAsyncTask", "UNAUTHORIZED");
+                    return null;
+                }
 
                 // TimeStamp(DB 시간) to Date(Java 시간) 를 위해
                 GsonBuilder builder = new GsonBuilder();
