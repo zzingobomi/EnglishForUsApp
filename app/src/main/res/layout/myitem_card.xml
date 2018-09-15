@@ -50,7 +50,8 @@
             android:paddingEnd="4dp"
             android:textSize="20sp"
             android:visibility="gone"
-            android:text=""/>
+            android:text=""
+            android:maxLength="255"/>
         <TextView
             android:id="@+id/myitem_title_en_literal"
             android:layout_width="wrap_content"
@@ -84,7 +85,8 @@
             android:paddingEnd="4dp"
             android:textSize="20sp"
             android:visibility="gone"
-            android:text=""/>
+            android:text=""
+            android:maxLength="255"/>
         <LinearLayout
             android:id="@+id/myitem_addinfo_layout"
             android:layout_width="match_parent"
@@ -124,7 +126,8 @@
                 android:textSize="12sp"
                 android:minLines="3"
                 android:visibility="gone"
-                android:text=""/>
+                android:text=""
+                android:maxLength="255"/>
             <TextView
                 android:id="@+id/myitem_regdate"
                 android:layout_width="wrap_content"

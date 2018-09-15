@@ -17,7 +17,8 @@
             android:layout_width="0dp"
             android:layout_weight="0.7"
             android:layout_height="wrap_content"
-            android:hint="@string/study_reply_create_content"/>
+            android:hint="@string/study_reply_create_content"
+            android:maxLength="255"/>
         <TextView
             android:id="@+id/reply_create_btn"
             android:layout_width="0dp"

@@ -80,7 +80,8 @@
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:layout_marginTop="8dp"
-                android:visibility="gone"/>
+                android:visibility="gone"
+                android:maxLength="255"/>
 
 
         </LinearLayout>
