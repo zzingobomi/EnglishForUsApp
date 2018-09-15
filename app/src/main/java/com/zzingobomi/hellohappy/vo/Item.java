@@ -24,6 +24,12 @@ public class Item implements Serializable{
 
     }
 
+    public Item(int idx, String title_ko, String title_en, String addinfo) {
+        this.title_ko = title_ko;
+        this.title_en = title_en;
+        this.addinfo = addinfo;
+    }
+
     public Item(String title_ko, String title_en, String addinfo, String regidemail, String regdisplayname) {
         this.title_ko = title_ko;
         this.title_en = title_en;
