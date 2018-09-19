@@ -39,6 +39,9 @@
     <string name="common_modify_cancel_text">취소</string>
     <string name="common_delete_text">삭제</string>
 
+    <string name="common_exit_title">Exit</string>
+    <string name="common_exit_content">정말 종료하시겠습니까?</string>
+
     <!-- Home -->
     <string name="home_main_text">안녕하세요. ZZINGOBOMI 입니다.\n공부하기 기능은 바로 이용하실 수 있고\n문장 추가와 댓글은 회원가입을 이용해 주세요</string>
 

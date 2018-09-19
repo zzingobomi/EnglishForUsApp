@@ -170,8 +170,8 @@ public class MainActivity extends AppCompatActivity
             if(mCurrentFragment instanceof HomeFragment) {
                 // 홈화면이면 앱종료 묻기
                 new MaterialDialog.Builder(this)
-                        .title("알림")
-                        .content("앱을 종료하시겠습니까?")
+                        .title(getString(R.string.common_exit_title))
+                        .content(getString(R.string.common_exit_content))
                         .positiveText(R.string.common_agree)
                         .negativeText(R.string.common_disagree)
                         .positiveColor(Color.BLACK)
