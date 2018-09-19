@@ -167,7 +167,31 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if(mCurrentFragment instanceof HomeFragment) {
+                // 홈화면이면 앱종료 묻기
+                new MaterialDialog.Builder(this)
+                        .title("알림")
+                        .content("앱을 종료하시겠습니까?")
+                        .positiveText(R.string.common_agree)
+                        .negativeText(R.string.common_disagree)
+                        .positiveColor(Color.BLACK)
+                        .negativeColor(Color.BLACK)
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                finish();
+                            }
+                        })
+                        .show();
+            } else {
+                if(getSupportFragmentManager().getBackStackEntryCount() >= 1) {
+                    // 일반적인 백버튼
+                    super.onBackPressed();
+                } else {
+                    // 홈화면 돌아가기
+                    goHome();
+                }
+            }
         }
     }
 
